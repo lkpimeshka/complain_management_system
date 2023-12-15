@@ -26,16 +26,31 @@ class ArticleController extends Controller
 
         // Form validation
         $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required'
+            'txtcomplaint_name' => 'required',
+            'txtcomplaint_mobile_number' => 'required',
+            'txtcomplaint_nic_number' => 'required',
+            'txtcomplaint_mobile_number' => 'required',
+            'txtcomplaint_email' => 'required',
+            'location' => 'required',
+            'problem_type' => 'required',
+            'txtcomplaint_remarks' => 'required',
+            'FileDocumentAttachment' => 'required'
         ]);
 
         $data = Article::create([
-            'title' => $request['title'],
-            'description' => $request['description'],
+            'txtcomplaint_name' => $request['txtcomplaint_name'],
+            'txtcomplaint_mobile_number' => $request['txtcomplaint_mobile_number'],
+            'txtcomplaint_nic_number' => $request['txtcomplaint_nic_number'],
+            'txtcomplaint_mobile_number' => $request['txtcomplaint_mobile_number'],
+            'txtcomplaint_email' => $request['txtcomplaint_email'],
+            'location' => $request['location'],
+            'problem_type' => $request['problem_type'],
+            'txtcomplaint_remarks' => $request['txtcomplaint_remarks'],
+            'FileDocumentAttachment' => $request['FileDocumentAttachment'],
+
         ]);
 
-        return Redirect::to('/article/list')->with('success', 'Article saved Successfully.');
+        return Redirect::to('/article/list')->with('success', 'Camplaint saved Successfully.');
     }
 
     public function editArticle($id)
@@ -51,14 +66,28 @@ class ArticleController extends Controller
         // Form validation
         $this->validate($request, [
             'id' => 'required',
-            'title' => 'required',
-            'description' => 'required'
+            'txtcomplaint_name' => 'required',
+            'txtcomplaint_mobile_number' => 'required',
+            'txtcomplaint_nic_number' => 'required',
+            'txtcomplaint_mobile_number' => 'required',
+            'txtcomplaint_email' => 'required',
+            'location' => 'required',
+            'problem_type' => 'required',
+            'txtcomplaint_remarks' => 'required',
+            'FileDocumentAttachment' => 'required'
         ]);
 
         Article::where('id', $request['id'])
                 ->update([
-                    'title' => $request['title'],
-                    'description' => $request['description']
+                    'txtcomplaint_name' => $request['txtcomplaint_name'],
+                    'txtcomplaint_mobile_number' => $request['txtcomplaint_mobile_number'],
+                    'txtcomplaint_nic_number' => $request['txtcomplaint_nic_number'],
+                    'txtcomplaint_mobile_number' => $request['txtcomplaint_mobile_number'],
+                    'txtcomplaint_email' => $request['txtcomplaint_email'],
+                    'location' => $request['location'],
+                    'problem_type' => $request['problem_type'],
+                    'txtcomplaint_remarks' => $request['txtcomplaint_remarks'],
+                    'FileDocumentAttachment' => $request['FileDocumentAttachment']
                 ]);
 
         return Redirect::to('/article/list')->with('success', 'Article #'.$request['id'].' updated Successfully.');
