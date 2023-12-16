@@ -16,7 +16,16 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user.index', ['role' => $this->loginUser()->role, 'users' => User::all() ]);
+        if($this->loginUser()->role == 1){
+            $user = User::all();
+        }else{
+            $loginUserRole = Role::find($this->loginUser()->id);
+            $user = User::join('roles', 'users.role', 'roles.id')
+                            ->where('roles.institute', $loginUserRole->institute)
+                            ->get(['users.*']);
+        }
+
+        return view('user.index', ['role' => $this->loginUser()->role, 'users' =>  $user]);
     }
 
     public function createUser(Request $request)
