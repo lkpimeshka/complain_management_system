@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserDetail extends Model
 {
-    // use HasFactory;
-    // protected $table = 'user_details';
-    // protected $fillable = ['user_id', 'address_line_1', 'address_line_2', 'city', 'company', 'telephone'];
-
     use HasFactory;
 
     protected $table = 'user_details';

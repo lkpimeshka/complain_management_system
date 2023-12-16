@@ -73,7 +73,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            new DataTable('#example', {
+            new DataTable('#datatable', {
                 responsive: true,
                 rowReorder: {
                     selector: 'td:nth-child(2)'

@@ -18,12 +18,6 @@ class UserDetailController extends Controller
         return view('userDetails.index');
     }
 
-    /**
-     * Get the data for listing in yajra.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function getUsers(Request $request, UserDetail $users)
     {
         $userModel = User::all();
@@ -43,8 +37,6 @@ class UserDetailController extends Controller
                 'telephone' => $userDetails['telephone'],
             );
         }
-
-        // $data = $users->getData();
 
         return \DataTables::of($userArr)
             ->addColumn('Actions', function($data) {
