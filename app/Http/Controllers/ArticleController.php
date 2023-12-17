@@ -10,8 +10,8 @@ class ArticleController extends Controller
 {
 
     public function index()
-    { 
-        $articles = Article::get();  
+    {
+        $articles = Article::get();
         return view('articles.index',['articles' => $articles]);
     }
 
@@ -32,7 +32,7 @@ class ArticleController extends Controller
 
         $data = Article::create([
             'title' => $request['title'],
-            'description' => $request['description'],
+            // 'description' => $request['description'],
         ]);
 
         return Redirect::to('/article/list')->with('success', 'Article saved Successfully.');
@@ -76,5 +76,5 @@ class ArticleController extends Controller
         Article::where('id', $id)->delete();
         return Redirect::to('/article/list')->with('success', 'Article #'.$id.' deleted Successfully.');
     }
-    
+
 }
