@@ -52,7 +52,7 @@ class ArticleController extends Controller
         $this->validate($request, [
             'id' => 'required',
             'title' => 'required',
-            'description' => 'required'
+            // 'description' => 'required'
         ]);
 
         Article::where('id', $request['id'])
