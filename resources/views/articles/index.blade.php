@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h2 style="padding-top: 20px; padding-bottom: 10px;">Articles Table</h2>
+            <h2 style="padding-top: 20px; padding-bottom: 10px;">Complaints and reviews</h2>
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('article/create')}}" class="btn btn-md btn-success" style="margin-top: 20px; float: right">Create Article</a>
+            <a href="{{url('article/create')}}" class="btn btn-md btn-success" style="margin-top: 20px; float: right">New Complaint</a>
         </div>
     </div>
     <hr/>
@@ -16,11 +16,14 @@
     <table id="example" class="display nowrap" style="width:100%; padding-top: 20px;">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Title</th>
+                <th>Complait ID</th>
+                <th>Complainer ID</th>
+                <th>Location</th>
+                <th>Problem Type</th>
                 <th>Description</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
+                <th>Attachments</th>
+                <th>Complaint Date</th>
+                <th>Last update Date</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,8 +32,11 @@
                 @foreach ($articles as $k => $article)
                     <tr>
                         <td>{{$article->id}}</td>
-                        <td>{{$article->title}}</td>
-                        <td>{{$article->description}}</td>
+                        <td>{{$article->txtcomplainer_id}}</td>
+                        <td>{{$article->location}}</td>
+                        <td>{{$article->problem_type}}</td>
+                        <td>{{$article->txtcomplaint_remarks}}</td>
+                        <td>{{$article->FileDocumentAttachment}}</td>
                         <td>{{$article->created_at}}</td>
                         <td>{{$article->updated_at}}</td>
                         <td>
@@ -43,13 +49,16 @@
             @endif
         </tbody>
         <tfoot>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
+        <tr>
+                <th>Complait ID</th>
+                <th>Complainer ID</th>
+                <th>Location</th>
+                <th>Problem Type</th>
                 <th>Description</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
-                <th></th>
+                <th>Attachments</th>
+                <th>Complaint Date</th>
+                <th>Last update Date</th>
+                
             </tr>
         </tfoot>
     </table>
