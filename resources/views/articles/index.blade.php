@@ -13,7 +13,7 @@
     </div>
     <hr/>
 
-    <table id="example" class="display nowrap" style="width:100%; padding-top: 20px;">
+    <table id="datatable" class="display nowrap" style="width:100%; padding-top: 20px;">
         <thead>
             <tr>
                 <th>Complait ID</th>
