@@ -26,6 +26,10 @@ Route::get('/home', function () {
     return view('welcome');
 });
 
+Route::view('/test-progress', 'progress'); # test route
+
+
+
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
