@@ -79,6 +79,16 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            if(localStorage.getItem("success-alert")){
+                toastr.success(localStorage.getItem("success-alert"));
+                localStorage.removeItem("success-alert");
+            }
+
+            if(localStorage.getItem("error-alert")){
+                toastr.error(localStorage.getItem("error-alert"));
+                localStorage.removeItem("error-alert");
+            }
     
             var deleteID;
             $('body').on('click', '#getDeleteId', function(){
@@ -96,10 +106,13 @@
                     url: "/role/delete/"+id,
                     method: 'GET',
                     success: function(result) {
-                        setInterval(function(){
-                            $('.datatable').DataTable().ajax.reload();
-                            $('#DeleteRoleModal').hide();
-                        }, 1000);
+                        $('#DeleteRoleModal').hide();
+                        localStorage.setItem("success-alert", result.success);
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        localStorage.setItem("error-alert", xhr.responseJSON.error);
+                        location.reload();
                     }
                 });
             });
