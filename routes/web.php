@@ -5,7 +5,7 @@ use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ComplainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +30,13 @@ Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
-Route::get('article/list', [ArticleController::class, 'index'])->middleware('auth');
-Route::get('article/create', [ArticleController::class, 'createArticle'])->middleware('auth');
-Route::post('article/save', [ArticleController::class, 'saveArticle'])->name('store-article')->middleware('auth');
-Route::get('article/edit/{id}', [ArticleController::class, 'editArticle'])->middleware('auth');
-Route::post('article/update', [ArticleController::class, 'updateArticle'])->name('update-article')->middleware('auth');
-Route::get('article/view/{id}', [ArticleController::class, 'viewArticle'])->middleware('auth');
-Route::get('article/delete/{id}', [ArticleController::class, 'deleteArticle'])->middleware('auth');
+Route::get('complain/list', [ComplainController::class, 'index'])->middleware('auth');
+Route::get('complain/create', [ComplainController::class, 'createComplain'])->middleware('auth');
+Route::post('complain/save', [ComplainController::class, 'saveComplain'])->name('store-complain')->middleware('auth');
+Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->middleware('auth');
+Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
+Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
+Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
 
 Route::get('role/list', [RoleController::class, 'index'])->middleware('auth');
 Route::get('role/create', [RoleController::class, 'createRole'])->middleware('auth');
@@ -106,6 +106,7 @@ Route::get('upload',[UserDetailController::class, 'index'])->middleware('auth');
 Route::post('crop',[UserDetailController::class, 'cropProfile'])->name('crop')->middleware('auth');
 Route::get('my-account', [UserDetailController::class, 'myAccount'])->name('my-account')->middleware('auth');
 Route::post('updateAccount', [UserDetailController::class, 'updateAccount'])->name('update-account')->middleware('auth');
+
 
 
 
