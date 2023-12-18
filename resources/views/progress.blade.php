@@ -1,9 +1,11 @@
-@extends('layouts.app') {{-- Update with your actual layout name, for example, 'app' or another layout you are using --}}
-
-@section('content')
-    <header>
-        <h1>Wildlife & Forestry Crime Complaint System</h1>
-    </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Crime Complaint System</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -16,16 +18,15 @@
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 1em 0;
+            padding: 1.5rem 0;
         }
 
         section {
-            max-width: 800px;
-            margin: 20px auto;
             background-color: #fff;
-            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem auto;
         }
 
         h1 {
@@ -38,34 +39,32 @@
 
         .flow-chart {
             display: flex;
-            flex-direction: column;
             position: relative;
         }
 
         .step {
-            width: 4cm;
-            height: 3cm;
+            flex: 1; /* Equal width for each step */
             text-align: center;
-            padding: 7px; /* Updated padding to 0.7cm */
+            padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 4px;
-            background: linear-gradient(to bottom right, #BFEFFF, #87CEEB); /* Gradient from very light blue to slightly darker blue */
+            background: linear-gradient(to bottom right, #BFEFFF, #87CEEB);
             position: relative;
-            margin-bottom: 3cm; /* Adjust the margin to set the gap between boxes */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Box shadow with slight increase from first to last box */
+            margin-right: 2%; /* Adjust the space between steps */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .step:last-child {
-            margin-bottom: 0; /* Remove bottom margin for the last box */
+            margin-right: 1px; /* margins  */
         }
 
         .step:hover {
-            background: linear-gradient(to bottom right, #A8D8F8, #70a8cd); /* Change this to a darker shade if needed */
+            background: linear-gradient(to bottom right, #A8D8F8, #70a8cd);
         }
 
         footer {
             text-align: center;
-            padding: 10px;
+            padding: 1rem;
             background-color: #333;
             color: #fff;
             position: fixed;
@@ -73,11 +72,18 @@
             width: 100%;
         }
     </style>
-    <section>
-        <h2>Submit a Complaint Against Environmental Crime</h2>
-        <p>Empowering the public to take action against wildlife & forestry crime. Report incidents with evidence through our online and mobile applications.</p>
+</head>
+<body>
 
-        <div class="flow-chart">
+    <header class="bg-dark text-white">
+        <h1>Environmental Crime Complaint System</h1>
+    </header>
+
+    <section class="container">
+        <h2>Submit a Complaint Against Environmental Crime</h2>
+        <p>Empowering the public to take action against wildlife, forestry, and environmental crime. Report incidents with evidence through our online and mobile applications.</p>
+
+        <div class="flow-chart d-flex">
             <div class="step">
                 <h3>Step 1</h3>
                 <p>Create an account or log in</p>
@@ -97,7 +103,13 @@
         </div>
     </section>
 
-    <footer>
-        &copy; Complaint management System
+    <footer class="bg-dark text-white">
+        &copy; 2023 Environmental Crime Complaint System
     </footer>
-@endsection
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
