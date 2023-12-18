@@ -135,11 +135,11 @@ if ($currentUser) {
 @endsection
 
 @section('scripts')
-<script>
+<!-- <script>
    <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/datepicker3.js') }}"></script>
 <script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-</script>
+</script> -->
 @endsection
