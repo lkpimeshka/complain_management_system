@@ -23,7 +23,7 @@ if ($currentUser) {
 @section('content')
 <div class="container">
     <div class="se-pre-con"></div>
-    <form id="form1" method="post" action="{{ route('store-article') }}" runat="server" onsubmit="return ValidationInputData()">
+    <form id="form1" method="post" action="{{ route('store-complain') }}" runat="server" onsubmit="return ValidationInputData()">
         @csrf
         <div id="wrapper">
             <!-- Navigation -->
@@ -134,12 +134,4 @@ if ($currentUser) {
 </div>
 @endsection
 
-@section('scripts')
-<!-- <script>
-   <script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/datepicker3.js') }}"></script>
-<script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
-<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-</script> -->
-@endsection
+

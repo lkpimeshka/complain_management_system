@@ -23,27 +23,27 @@ $currentUser = User::find(Auth::id());
     </li>
 
 @if($currentUser->role == 1) <!-- Admin User -->
-    <li class="nav-header">ARTICLE DETAILS</li>
+    <li class="nav-header">COMPLAINTS DETAILS</li>
 
     <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
             <p>
-                Articles
+                Complaints
             <i class="fas fa-angle-left right"></i>
             </p>
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-            <a href="{{ URL::to('article/list') }}" class="nav-link">
+            <a href="{{ URL::to('complain/list') }}" class="nav-link">
                 <i class="fa fa-list nav-icon" style="font-size: 13px;"></i>
-                <p>Article List</p>
+                <p>Complaints List</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="{{ URL::to('article/create') }}" class="nav-link">
+            <a href="{{ URL::to('complain/create') }}" class="nav-link">
                 <i class="fa fa-plus nav-icon" style="font-size: 13px;"></i>
-                <p>Add New</p>
+                <p>New Complaint</p>
             </a>
             </li>
         </ul>
