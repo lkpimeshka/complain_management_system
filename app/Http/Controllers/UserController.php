@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Privilege;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
@@ -31,10 +32,11 @@ class UserController extends Controller
     public function createUser(Request $request)
     {
         if($this->loginUser()->role == 1){
-            $userRoles = Role::where('id', '<>', 1)->get();
+            // $userRoles = Role::where('id', '<>', 1)->get();
+            $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
         }else{
             $loginUserRole = Role::where('id', $this->loginUser()->role)->first();
-            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3])->get();
+            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get(); 
         }
         
         return view('user.createUser',['role' => $this->loginUser()->role, 'userRoles' => $userRoles]);
@@ -74,10 +76,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         if($this->loginUser()->role == 1){
-            $userRoles = Role::where('id', '<>', 1)->get();
+            $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
         }else{
             $loginUserRole = Role::where('id', $this->loginUser()->role)->first();
-            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3])->get();
+            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get();
         }
 
         return view('user.editUser',['role' => $this->loginUser()->role, 'user' => $user, 'userRoles' => $userRoles]);
@@ -116,7 +118,7 @@ class UserController extends Controller
     {
         $user = User::join('roles', 'users.role', 'roles.id')
                     ->join('institutes', 'roles.institute', 'institutes.id')
-                    ->where('roles.id', $id)
+                    ->where('users.id', $id)
                     ->first([
                         'users.*',
                         'roles.name as role_name',
