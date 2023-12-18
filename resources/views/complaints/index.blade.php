@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('article/create')}}" class="btn btn-md btn-success" style="margin-top: 20px; float: right">New Complaint</a>
+            <a href="{{url('complain/create')}}" class="btn btn-md btn-success" style="margin-top: 20px; float: right">New Complaint</a>
         </div>
     </div>
     <hr/>
@@ -28,21 +28,21 @@
             </tr>
         </thead>
         <tbody>
-            @if($articles)
-                @foreach ($articles as $k => $article)
+            @if($complaints)
+                @foreach ($complaints as $k => $complaints)
                     <tr>
-                        <td>{{$article->id}}</td>
-                        <td>{{$article->txtcomplainer_id}}</td>
-                        <td>{{$article->location}}</td>
-                        <td>{{$article->problem_type}}</td>
-                        <td>{{$article->txtcomplaint_remarks}}</td>
-                        <td>{{$article->FileDocumentAttachment}}</td>
-                        <td>{{$article->created_at}}</td>
-                        <td>{{$article->updated_at}}</td>
+                        <td>{{$complaints->id}}</td>
+                        <td>{{$complaints->txtcomplainer_id}}</td>
+                        <td>{{$complaints->location}}</td>
+                        <td>{{$complaints->problem_type}}</td>
+                        <td>{{$complaints->txtcomplaint_remarks}}</td>
+                        <td>{{$complaints->FileDocumentAttachment}}</td>
+                        <td>{{$complaints->created_at}}</td>
+                        <td>{{$complaints->updated_at}}</td>
                         <td>
-                            <a href="{{url('article/view/'.$article->id)}}" class="btn btn-success btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{{url('article/edit/'.$article->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
-                            <a href="{{url('article/delete/'.$article->id)}}" class="btn btn-danger btn-sm" title ="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{{url('complain/view/'.$complaints->id)}}" class="btn btn-success btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="{{url('complain/edit/'.$complaints->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+                            <a href="{{url('complain/delete/'.$complaints->id)}}" class="btn btn-danger btn-sm" title ="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 @endforeach
