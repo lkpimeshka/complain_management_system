@@ -36,53 +36,21 @@ if ($currentUser) {
                             <i class="fa fa-plus"></i>&nbsp;&nbsp;New Complaint
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
+
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <input type="hidden" id="txtcomplainer_id" name="txtcomplainer_id" value="{{$id}}" class="form-control">
-                                    <p class="help-block">
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-6">
                                     <label>
                                         Problem Type
                                     </label>
-                                        <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="__doPostBack('problem_type','')">
+                                    <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="__doPostBack('problem_type','')">
                                         @foreach($problems as $prolem)
                                             <option value="{{$prolem->id}}">{{$prolem->name}}</option>
                                         @endforeach
                                         
                                         <!--<option value="Duration too high">No feedback for inquiries</option>-->
                                     </select>  
-                                    
-                                     <!--<script>
-        function updateDivision() {
-            var select = document.getElementById("problem_type");
-            var selectedValue = select.options[select.selectedIndex].value;
-            var division_id = document.getElementById("division_id"); // Corrected ID
-
-            // Update the division based on the selected option
-            if (selectedValue === "Complaint-1") {
-                division_id.value = "2";
-            } else if (selectedValue === "Complaint-2") {
-                division_id.value = "1";
-            } else if (selectedValue === "Complaint-3") {
-                division_id.value = "2";
-            }
-        }
-    </script>-->
-           
-                       
-                                    <div class="col-lg-6">
-                                    <input type="hidden" id="division_id" name="division_id" value="" class="form-control">
-
-                                    <p class="help-block">
-                                    </p>
                                 </div>
-                                    <p class="help-block">
-                                    </p>
-                                </div>
+                                   
                                 <div class="col-lg-6">
                                     <label>
                                         Location
@@ -110,7 +78,7 @@ if ($currentUser) {
                                     </p>
                                 </div>
                             </div>
-                            <br />
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>
@@ -121,7 +89,7 @@ if ($currentUser) {
                                     </p>
                                 </div>
                             </div>
-                            <br />
+     
                             <div class="row">
                                 <div class="col-lg-12">
                                     <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">

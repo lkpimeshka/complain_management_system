@@ -47,10 +47,8 @@ if ($currentUser) {
                                 </div>
                             </div>
                                     <div class="col-lg-6">
-                                    <label>
-                                        Activity Type
-                                    </label>
-                                    <input type="Text" id="activity_type" name="activity_type" value="1" class="form-control">
+                                    
+                                    <input type="hidden" id="activity_type" name="activity_type" value="1" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
