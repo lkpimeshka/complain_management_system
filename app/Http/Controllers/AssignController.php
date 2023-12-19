@@ -61,7 +61,7 @@ class AssignController extends Controller
 
         ]);
 
-        return Redirect::to('/assigns/index')->with('success', 'Assign saved Successfully.');
+        return Redirect::to('/assigns/index')->with('success', 'Assigned saved Successfully.');
     }
 
     public function editAssign($id)

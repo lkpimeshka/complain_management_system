@@ -48,13 +48,15 @@ if ($currentUser) {
                                     <label>
                                         Problem Type
                                     </label>
-                                    <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="updateDivision()">
-                                        <option value="Complaint-1">Complaint-1</option>
-                                        <option value="Complaint-2">Complaint-2</option>
-                                        <option value="Complaint-3">Complaint-3</option>
-                                       
-                                    </select>
-                                    <script>
+                                        <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="__doPostBack('problem_type','')">
+                                        @foreach($problems as $prolem)
+                                            <option value="{{$prolem->id}}">{{$prolem->name}}</option>
+                                        @endforeach
+                                        
+                                        <!--<option value="Duration too high">No feedback for inquiries</option>-->
+                                    </select>  
+                                    
+                                     <!--<script>
         function updateDivision() {
             var select = document.getElementById("problem_type");
             var selectedValue = select.options[select.selectedIndex].value;
@@ -69,7 +71,7 @@ if ($currentUser) {
                 division_id.value = "2";
             }
         }
-    </script>
+    </script>-->
            
                        
                                     <div class="col-lg-6">
