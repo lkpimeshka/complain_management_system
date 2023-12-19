@@ -13,6 +13,9 @@
             <div class="card">
                 <div class="card-body">
 
+                    <h4 style="margin-top: 10px;">Personal Info</h4>
+                    <hr/>
+
                     <div class="row">
                         <div class="col-sm-6" style="margin-bottom: 5px;">
                             <label>Name*</label>
@@ -126,8 +129,7 @@
                                 </span>
                             @enderror
                         </div>
-                    </div>
-                        
+                    </div>                        
 
                     <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
 

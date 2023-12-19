@@ -22,7 +22,27 @@ $currentUser = User::find(Auth::id());
         </a>
     </li>
 
-@if($currentUser->role == 1) <!-- Admin User -->
+@if($currentUser->role == 1 || $currentUser->role == 2 || $currentUser->role == 3) <!-- Admin User -->
+    <li class="nav-header">USER DETAILS</li>
+
+    <li class="nav-item">
+        <a href="{{ URL::to('role/list') }}" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                Roles
+            </p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{{ URL::to('user/list') }}" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                Users
+            </p>
+        </a>
+    </li>
+
     <li class="nav-header">COMPLAINTS DETAILS</li>
 
     <li class="nav-item">
@@ -75,7 +95,7 @@ $currentUser = User::find(Auth::id());
     </li>
 @endif
 
-@if($currentUser->role == 2) <!-- Customer -->
+@if($currentUser->role == 4) <!-- Customer -->
 
     <li class="nav-item">
         <a href="{{ URL::to('#') }}" class="nav-link">

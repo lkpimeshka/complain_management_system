@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Privilege;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\TestMail;
 use Redirect;
 
 use DataTables;
@@ -31,10 +33,11 @@ class UserController extends Controller
     public function createUser(Request $request)
     {
         if($this->loginUser()->role == 1){
-            $userRoles = Role::where('id', '<>', 1)->get();
+            // $userRoles = Role::where('id', '<>', 1)->get();
+            $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
         }else{
             $loginUserRole = Role::where('id', $this->loginUser()->role)->first();
-            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3])->get();
+            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get(); 
         }
         
         return view('user.createUser',['role' => $this->loginUser()->role, 'userRoles' => $userRoles]);
@@ -74,10 +77,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         if($this->loginUser()->role == 1){
-            $userRoles = Role::where('id', '<>', 1)->get();
+            $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
         }else{
             $loginUserRole = Role::where('id', $this->loginUser()->role)->first();
-            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3])->get();
+            $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get();
         }
 
         return view('user.editUser',['role' => $this->loginUser()->role, 'user' => $user, 'userRoles' => $userRoles]);
@@ -116,13 +119,26 @@ class UserController extends Controller
     {
         $user = User::join('roles', 'users.role', 'roles.id')
                     ->join('institutes', 'roles.institute', 'institutes.id')
-                    ->where('roles.id', $id)
+                    ->where('users.id', $id)
                     ->first([
                         'users.*',
                         'roles.name as role_name',
                         'institutes.name as institutes_name',
                     ]);
         return view('user.viewUser', ['user'=>$user]);
+    }
+
+    public function myAccount()
+    {
+        $user = User::join('roles', 'users.role', 'roles.id')
+                    ->join('institutes', 'roles.institute', 'institutes.id')
+                    ->where('users.id', Auth::id())
+                    ->first([
+                        'users.*',
+                        'roles.name as role_name',
+                        'institutes.name as institutes_name',
+                    ]);
+        return view('user.myAccount', ['user'=>$user]);
     }
 
     public function deleteUser($id)
@@ -145,5 +161,22 @@ class UserController extends Controller
     public function loginUser()
     {
         return User::find(Auth::id());
+    }
+
+    public function testMail()
+    {
+        $details = [
+            'name' => 'SDP Project',
+            'email' => 'SDP Project test mail for the testing purposes',
+            'mail' => 'pasanimeshka95@gmail.com',
+        ];
+        
+        $this->sendTestMail($details);
+        return view('mail.TestMail', ['data' => $details]);
+    }
+
+    public function sendTestMail($details)
+    {
+        return \Mail::to($details['mail'])->send(new TestMail($details));
     }
 }
