@@ -43,7 +43,7 @@ class ComplainController extends Controller
 
         ]);
 
-        return Redirect::to('/Complain/list')->with('success', 'Camplaint saved Successfully.');
+        return Redirect::to('/complain/list')->with('success', 'Camplaint saved Successfully.');
     }
 
     public function editComplain($id)
@@ -91,6 +91,11 @@ class ComplainController extends Controller
     {
         Complain::where('id', $id)->delete();
         return Redirect::to('/complain/list')->with('success', 'Complain #'.$id.' Deleted Successfully.');
+    }
+    public function assignComplain($id)
+    {
+        $complain = Complain::where('id', $id)->first();
+        return view('complaints.assign_user', ['complain'=>$complain]);
     }
     
 }

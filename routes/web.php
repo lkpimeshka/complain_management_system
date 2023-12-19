@@ -37,6 +37,7 @@ Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->m
 Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
 Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
 Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
+Route::get('complain/assign/{id}', [ComplainController::class, 'assignComplain'])->middleware('auth');
 
 Route::get('role/list', [RoleController::class, 'index'])->middleware('auth');
 Route::get('role/create', [RoleController::class, 'createRole'])->middleware('auth');
@@ -53,6 +54,7 @@ Route::get('user/edit/{id}', [UserController::class, 'editUser'])->middleware('a
 Route::post('user/update', [UserController::class, 'updateUser'])->name('update-user')->middleware('auth');
 Route::get('user/view/{id}', [UserController::class, 'viewUser'])->middleware('auth');
 Route::get('user/delete/{id}', [UserController::class, 'deleteUser'])->middleware('auth');
+
 
 
 
