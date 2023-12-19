@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ComplainController;
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +29,17 @@ Route::get('/home', function () {
 });
 
 Route::view('/test-progress', 'progress'); # test route
+Route::get('/test-mail', [UserController::class, 'testMail']);
 
+// Route::group(['middleware' => 'web', 'prefix' => 'password', 'as' => 'password.'], function () {
+//     // Password reset routes
+//     Route::get('reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('request');
+//     Route::post('email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('email');
+//     Route::get('reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('reset');
+//     Route::post('reset', 'Auth\ResetPasswordController@reset')->name('update');
+// });
 
-
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
@@ -50,6 +59,7 @@ Route::post('role/update', [RoleController::class, 'updateRole'])->name('update-
 Route::get('role/view/{id}', [RoleController::class, 'viewRole'])->middleware('auth');
 Route::get('role/delete/{id}', [RoleController::class, 'deleteRole'])->middleware('auth');
 
+Route::get('my-account', [UserController::class, 'myAccount'])->middleware('auth');
 Route::get('user/list', [UserController::class, 'index'])->middleware('auth');
 Route::get('user/create', [UserController::class, 'createUser'])->middleware('auth');
 Route::post('user/save', [UserController::class, 'saveUser'])->name('add-user')->middleware('auth');
@@ -93,11 +103,11 @@ Route::get('user/delete/{id}', [UserController::class, 'deleteUser'])->middlewar
 
 
 
+
+
 Route::get('/data-table', function () {
     return view('package.indexTable');
 });
-
-Route::get('/send-mail', [App\Http\Controllers\HomeController::class, 'sendMail']);
 
 // Resource Route for User Details.
 Route::resource('users', UserDetailController::class)->middleware('auth');
@@ -108,7 +118,7 @@ Route::get('user/changeAccountStatus/{id}', [UserDetailController::class, 'chang
 // Route::post('updateUser', [UserDetailController::class, 'updateUser'])->name('update-user')->middleware('auth');
 Route::get('upload',[UserDetailController::class, 'index'])->middleware('auth');
 Route::post('crop',[UserDetailController::class, 'cropProfile'])->name('crop')->middleware('auth');
-Route::get('my-account', [UserDetailController::class, 'myAccount'])->name('my-account')->middleware('auth');
+// Route::get('my-account', [UserDetailController::class, 'myAccount'])->name('my-account')->middleware('auth');
 Route::post('updateAccount', [UserDetailController::class, 'updateAccount'])->name('update-account')->middleware('auth');
 
 

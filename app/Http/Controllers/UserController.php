@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Privilege;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\TestMail;
 use Redirect;
 
 use DataTables;
@@ -127,6 +128,19 @@ class UserController extends Controller
         return view('user.viewUser', ['user'=>$user]);
     }
 
+    public function myAccount()
+    {
+        $user = User::join('roles', 'users.role', 'roles.id')
+                    ->join('institutes', 'roles.institute', 'institutes.id')
+                    ->where('users.id', Auth::id())
+                    ->first([
+                        'users.*',
+                        'roles.name as role_name',
+                        'institutes.name as institutes_name',
+                    ]);
+        return view('user.myAccount', ['user'=>$user]);
+    }
+
     public function deleteUser($id)
     {
 
@@ -147,5 +161,22 @@ class UserController extends Controller
     public function loginUser()
     {
         return User::find(Auth::id());
+    }
+
+    public function testMail()
+    {
+        $details = [
+            'name' => 'SDP Project',
+            'email' => 'SDP Project test mail for the testing purposes',
+            'mail' => 'pasanimeshka95@gmail.com',
+        ];
+        
+        $this->sendTestMail($details);
+        return view('mail.TestMail', ['data' => $details]);
+    }
+
+    public function sendTestMail($details)
+    {
+        return \Mail::to($details['mail'])->send(new TestMail($details));
     }
 }

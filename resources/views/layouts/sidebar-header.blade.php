@@ -16,7 +16,15 @@
     </div>
     <div class="info">
         @if(Auth::id())
-            <a href="{{ URL::to('view-user/'.$user->id) }}" class="d-block" style="text-align: center">{{ $user->name }}</a>
+            <a href="{{ URL::to('my-account') }}" class="d-block" style="text-align: center">{{ $user->name }}</a>
+            <a class="margin medium-small" href="{{ route('logout') }}" style="margin: 1px;"  title ="Log Out"
+                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                <i class="fa fa-power-off" aria-hidden="true"></i> Log out
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         @else
             <a href=" " class="d-block" style="text-align: center">Guest User</a>
         @endif

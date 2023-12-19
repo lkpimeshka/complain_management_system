@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\UserDetail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -56,8 +56,8 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'address_line_1' => ['required', 'string', 'max:512'],
             'city' => ['required', 'string', 'max:255'],
-            'nic_pp_no' => ['required', 'string', 'max:12'],
-            'telephone' => ['required', 'string', 'max:16'],
+            'nic' => ['required', 'string', 'max:12'],
+            'telephone' => ['required', 'string', 'min:10'],
         ]);
     }
 
@@ -68,20 +68,22 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 2,
-            'status' => 0,
-        ]);
-
-        UserDetail::create([
-            'user_id' => $user['id'],
+            'role' => 4,
+            'telephone' => $data['telephone'],
+            'nic' => $data['nic'],
             'address_line_1' => $data['address_line_1'],
             'address_line_2' => $data['address_line_2'],
             'city' => $data['city'],
-            'zip' => $data['zip'],
-            'nic_pp_no' => $data['nic_pp_no'],
-            'telephone' => $data['telephone'],
         ]);
 
+        // Send email verification notification
+        $user->sendEmailVerificationNotification();
+
         return $user;
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        return redirect('/dashboard')->with('success', 'Registration successful! Please check your email for verification.');
     }
 }
