@@ -92,7 +92,7 @@ class ComplainController extends Controller
         Complain::where('id', $id)->delete();
         return Redirect::to('/complain/list')->with('success', 'Complain #'.$id.' Deleted Successfully.');
     }
-    public function assignComplain($id)
+    public function assign_user($id)
     {
         $complain = Complain::where('id', $id)->first();
         return view('complaints.assign_user', ['complain'=>$complain]);

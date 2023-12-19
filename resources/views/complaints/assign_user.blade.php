@@ -83,7 +83,7 @@ if ($currentUser) {
                                 </div>
                                 <div class="col-lg-6">
                                     <label>
-                                        Location
+                                        Assign To
                                     </label>
                                     <select id="location" name="location" class="form-control chosen-select" onchange="__doPostBack('location','')">
                                         <option value="Colombo">Colombo</option>
