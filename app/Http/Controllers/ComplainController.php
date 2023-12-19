@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Complain;
+use App\Models\User;
+use App\Models\Institutes;
+use App\Models\Problem;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -10,15 +13,22 @@ class ComplainController extends Controller
 
     public function index()
     { 
-        $complaints = Complain::get();  
+        $complaints = Complain::all();  
         return view('complaints.index',['complaints' => $complaints]);
     }
 
-    public function createComplain(Request $request)
-    {
-        return view('complaints.createComplain');
-    }
+    //public function createComplain(Request $request)
+    //{
+       // return view('complaints.createComplain');
+    //}
+//----------------------
+public function createComplain(Request $request)
+{
+    
+    $problems = Problem::all();
+    return view('complaints.createComplain', ['problems' => $problems]);
 
+}
     // Store Form data in database
     public function saveComplain(Request $request)
     {

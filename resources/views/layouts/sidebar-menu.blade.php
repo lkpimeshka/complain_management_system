@@ -68,7 +68,31 @@ $currentUser = User::find(Auth::id());
             </li>
         </ul>
     </li>
+    <li class="nav-header">JOB ASSIGN DETAILS</li>
 
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+                Assign Jobs
+            <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+            <a href="{{ URL::to('assigns/index') }}" class="nav-link">
+                <i class="fa fa-list nav-icon" style="font-size: 13px;"></i>
+                <p>Assigned Jobs List</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ URL::to('assigns/assignUser/{id}') }}" class="nav-link">
+                <i class="fa fa-plus nav-icon" style="font-size: 13px;"></i>
+                <p>Assing To </p>
+            </a>
+            </li>
+        </ul>
+    </li>
 @endif
 
 @if($currentUser->role == 4) <!-- Customer -->
