@@ -9,6 +9,7 @@ if ($currentUser) {
     $username = $currentUser->name;
     $email = $currentUser->email;
     $id = $currentUser->id;
+    
 
      // Assuming the username column is 'name'
     // Do something with $username
@@ -23,7 +24,7 @@ if ($currentUser) {
 @section('content')
 <div class="container">
     <div class="se-pre-con"></div>
-    <form id="form1" method="post" action="{{ route('store-complain') }}" runat="server" onsubmit="return ValidationInputData()">
+    <form id="form1" method="post" action="{{ route('store-assign') }}" runat="server" onsubmit="return ValidationInputData()">
         @csrf
         <div id="wrapper">
             <!-- Navigation -->
@@ -33,7 +34,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;New Complaint
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Assign user
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">
@@ -48,15 +49,13 @@ if ($currentUser) {
                                     <label>
                                         Problem Type
                                     </label>
-                                        <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="__doPostBack('problem_type','')">
-                                        @foreach($problems as $prolem)
-                                            <option value="{{$prolem->id}}">{{$prolem->name}}</option>
-                                        @endforeach
-                                        
-                                        <!--<option value="Duration too high">No feedback for inquiries</option>-->
-                                    </select>  
-                                    
-                                     <!--<script>
+                                    <select id="problem_type" name="problem_type" class="form-control chosen-select" onchange="updateDivision()">
+                                        <option value="Complaint-1">Complaint-1</option>
+                                        <option value="Complaint-2">Complaint-2</option>
+                                        <option value="Complaint-3">Complaint-3</option>
+                                       
+                                    </select>
+                                    <script>
         function updateDivision() {
             var select = document.getElementById("problem_type");
             var selectedValue = select.options[select.selectedIndex].value;
@@ -71,7 +70,7 @@ if ($currentUser) {
                 division_id.value = "2";
             }
         }
-    </script>-->
+    </script>
            
                        
                                     <div class="col-lg-6">
@@ -85,7 +84,7 @@ if ($currentUser) {
                                 </div>
                                 <div class="col-lg-6">
                                     <label>
-                                        Location
+                                        Assign To
                                     </label>
                                     <select id="location" name="location" class="form-control chosen-select" onchange="__doPostBack('location','')">
                                         <option value="Colombo">Colombo</option>
@@ -99,7 +98,8 @@ if ($currentUser) {
                                 </div>
                             </div>
                             <br/>
-                         
+                  
+                      
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Complain;
+use App\Models\User;
+use App\Models\Institutes;
+use App\Models\Problem;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -10,15 +13,22 @@ class ComplainController extends Controller
 
     public function index()
     { 
-        $complaints = Complain::get();  
+        $complaints = Complain::all();  
         return view('complaints.index',['complaints' => $complaints]);
     }
 
-    public function createComplain(Request $request)
-    {
-        return view('complaints.createComplain');
-    }
+    //public function createComplain(Request $request)
+    //{
+       // return view('complaints.createComplain');
+    //}
+//----------------------
+public function createComplain(Request $request)
+{
+    
+    $problems = Problem::all();
+    return view('complaints.createComplain', ['problems' => $problems]);
 
+}
     // Store Form data in database
     public function saveComplain(Request $request)
     {
@@ -43,7 +53,7 @@ class ComplainController extends Controller
 
         ]);
 
-        return Redirect::to('/Complain/list')->with('success', 'Camplaint saved Successfully.');
+        return Redirect::to('/complain/list')->with('success', 'Camplaint saved Successfully.');
     }
 
     public function editComplain($id)
@@ -91,6 +101,11 @@ class ComplainController extends Controller
     {
         Complain::where('id', $id)->delete();
         return Redirect::to('/complain/list')->with('success', 'Complain #'.$id.' Deleted Successfully.');
+    }
+    public function assign_user($id)
+    {
+        $complain = Complain::where('id', $id)->first();
+        return view('complaints.assign_user', ['complain'=>$complain]);
     }
     
 }
