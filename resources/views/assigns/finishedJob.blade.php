@@ -20,13 +20,12 @@ if ($currentUser) {
 }
 ?>
 
-
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="se-pre-con"></div>
-    <form id="form1" method="post" action="{{ route('store-completeJob') }}" runat="server" onsubmit="return ValidationInputData()">
+    <form id="form1" method="post" action="{{ route('store-assign') }}" runat="server" onsubmit="return ValidationInputData()">
         @csrf
         <div id="wrapper">
             <!-- Navigation -->
@@ -36,7 +35,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Submission Details:
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Finalize Job.
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">
@@ -48,43 +47,31 @@ if ($currentUser) {
                             </div>
                                     <div class="col-lg-6">
                                     
-                                    <input type="hidden" id="activity_type" name="activity_type" value="3" class="form-control">
+                                    <input type="hidden" id="activity_type" name="activity_type" value="5" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label>
-                                        Assign To
-                                    </label>
-                                    <select id="assigned_to" name="assigned_to" class="form-control chosen-select" onchange="__doPostBack('assigned_to','')">
-                                        @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
-                                        @endforeach
-                                        
+                                <div>
+                                        <input type="hidden" id="assigned_to" name="assigned_to" value="{{$id}}" class="form-control"> 
                                         <!--<option value="Duration too high">No feedback for inquiries</option>-->
-                                    </select>
-                                    <p class="help-block">
-                                    </p>
-                                  </div>
+                               </div> 
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <label>
-                                        Description
+                                    Comments
                                     </label>
                                     <textarea id="description" name="description" class="form-control"></textarea>
                                     <p class="help-block">
                                     </p>
                                 </div>
-
                             <input type="hidden" id="txtcomplainer_id" name="txtcomplainer_id" value="{{$id}}" class="form-control">
-                            <label>
-                                       Assigned By {{$username}}
-                                    </label>
-                                    <input type="text" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
+                         
+                                    <input type="hidden" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            <div class="row">
+
+                            <!-- <div class="row">
                                 <div class="col-lg-12">
                                     <label>
                                         Attachments
@@ -93,10 +80,11 @@ if ($currentUser) {
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
+
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
+                                <div class="col-lg-8">
+                                    <input type="submit" name="send" value="Finish Task" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
                                 </div>
                             </div>
                         </div>

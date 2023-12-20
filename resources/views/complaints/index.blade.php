@@ -62,10 +62,10 @@
                             @elseif($complaint->status == 2)
                                 <a href="{{ url('assigns/completeJob/'.$activityRecord->id)}}" class="btn btn-primary btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Complete Job</a>
                             @elseif($complaint->status == 3)
-                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Finished</a>
-                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-danger btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assign</a>
-                            @elseif($complaint->status == 4)
-                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assign To</a>
+                                <a href="{{ url('assigns/finishedJob/'.$activityRecord->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Finished</a>
+                                <a href="{{ url('assigns/reAssignUser/'.$activityRecord->id)}}" class="btn btn-danger btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assign</a>
+                            <!--@elseif($complaint->status == 4)
+                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assign To</a>-->
                             @endif
                             <a href="{{url('complain/view/'.$complaint->id)}}" class="btn btn-secondary btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             <a href="{{url('complain/edit/'.$complaint->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>

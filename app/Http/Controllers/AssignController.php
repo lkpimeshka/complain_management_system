@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assign;
+use App\Models\Complain;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,7 +36,33 @@ class AssignController extends Controller
         return view('assigns.assignUser',['users' => $users]);
     }
 
+    public function reAssignsJob(Request $request)
+    {
+        $loginUersRole = Role::where('id', $this->loginUser()->role)->first();
+        $users = User::join('roles', 'users.role', 'roles.id')
+                    ->where('roles.institute', $loginUersRole->institute)
+                    ->get([
+                        'users.id as id',
+                        'users.name as name'
+                    ]);
 
+                    // var_dump($users);die();
+        return view('assigns.reAssignUser',['users' => $users]);
+    }
+
+    public function finishedJob(Request $request)
+    {
+        $loginUersRole = Role::where('id', $this->loginUser()->role)->first();
+        $users = User::join('roles', 'users.role', 'roles.id')
+                    ->where('roles.institute', $loginUersRole->institute)
+                    ->get([
+                        'users.id as id',
+                        'users.name as name'
+                    ]);
+
+                    // var_dump($users);die();
+        return view('assigns.finishedJob',['users' => $users]);
+    }
 
     // Store Form data in database
     public function saveAssign(Request $request)
@@ -48,7 +75,7 @@ class AssignController extends Controller
             'description' => 'required',
             'created_by' => 'required',
             'assigned_to' => 'required',
-            'attachments' => 'required'
+            //'attachments' => 'required'
         ]);
 
         $data = assign::create([
@@ -57,13 +84,14 @@ class AssignController extends Controller
             'description' => $request['description'],
             'created_by' => Auth::id(),
             'assigned_to' => $request['assigned_to'],
-            'attachments' => $request['attachments'],
+           // 'attachments' => $request['attachments'],
 
         ]);
 
         return Redirect::to('/assigns/index')->with('success', 'Assigned saved Successfully.');
     }
-
+ 
+ 
     public function editAssign($id)
     {
         $assign = Assign::where('id', $id)->first();
@@ -142,20 +170,31 @@ class AssignController extends Controller
             'complaint_id' => 'required',
             'activity_type' => 'required',
             'description' => 'required',
-            'created_by' => 'required',
+            // 'created_by' => 'required',
             'assigned_to' => 'required',
-            'attachments' => 'required'
+            // 'attachments' => 'required'
+            'attachments.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = assign::create([
+        $data = Assign::create([
             'complaint_id' => $request['complaint_id'],
             'activity_type' => $request['activity_type'],
             'description' => $request['description'],
             'created_by' => Auth::id(),
             'assigned_to' => $request['assigned_to'],
-            'attachments' => $request['attachments'],
+            // 'attachments' => $request['attachments'],
 
         ]);
+
+        foreach ($request->file('attachments') as $attachment) {
+            $atchImage = $request['complaint_id'] . '.' . time() . '.' . $attachment->extension();
+            $attachment->move(public_path('images\users\attachments'), $atchImage);
+            Attachment::create([
+                'record_id' => $data->id,
+                'user_type' => 2,
+                'attachments' => $atchImage,
+            ]);
+        }
 
         return Redirect::to('/assigns/index')->with('success', 'Job completed Successfully.');
     }

@@ -18,6 +18,14 @@ if ($currentUser) {
 } else {
     // User not found
 }
+
+
+
+                       
+                     //   $complain_id = App\Models\User::where('id',$complain->id)->first();
+                      //  $problem = App\Models\Problem::where('id',$complaint->problem_type)->first();
+
+                    
 ?>
 
 
@@ -52,7 +60,7 @@ if ($currentUser) {
                                     <p class="help-block">
                                     </p>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-8">
                                     <label>
                                         Assign To
                                     </label>
@@ -67,24 +75,22 @@ if ($currentUser) {
                                     </p>
                                   </div>
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <label>
-                                        Description
+                                    Comments
                                     </label>
                                     <textarea id="description" name="description" class="form-control"></textarea>
                                     <p class="help-block">
                                     </p>
                                 </div>
-
                             <input type="hidden" id="txtcomplainer_id" name="txtcomplainer_id" value="{{$id}}" class="form-control">
-                            <label>
-                                       Assigned By {{$username}}
-                                    </label>
-                                    <input type="text" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
+                         
+                                    <input type="hidden" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            <div class="row">
+
+                            <!-- <div class="row">
                                 <div class="col-lg-12">
                                     <label>
                                         Attachments
@@ -93,9 +99,10 @@ if ($currentUser) {
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
+
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
                                 </div>
                             </div>

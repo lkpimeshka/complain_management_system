@@ -56,11 +56,10 @@ if ($currentUser) {
                                         Location
                                     </label>
                                     <select id="location" name="location" class="form-control chosen-select" onchange="__doPostBack('location','')">
-                                        <option value="Colombo">Colombo</option>
-                                        <option value="Gampaha">Gampaha</option>
-                                        <option value="Kaluthara">Kaluthara</option>
-                                        <option value="Kegalle">Kagella</option>
-                                        <!--<option value="Duration too high">No feedback for inquiries</option>-->
+                                        @foreach($locations as $location)
+                                            <option value="{{$location->id}}">{{$location->name}}</option>
+                                        @endforeach 
+            
                                     </select>
                                     <p class="help-block">
                                     </p>

@@ -18,6 +18,14 @@ if ($currentUser) {
 } else {
     // User not found
 }
+
+
+
+                       
+                     //   $complain_id = App\Models\User::where('id',$complain->id)->first();
+                      //  $problem = App\Models\Problem::where('id',$complaint->problem_type)->first();
+
+                    
 ?>
 
 
@@ -26,7 +34,7 @@ if ($currentUser) {
 @section('content')
 <div class="container">
     <div class="se-pre-con"></div>
-    <form id="form1" method="post" action="{{ route('store-completeJob') }}" runat="server" onsubmit="return ValidationInputData()">
+    <form id="form1" method="post" action="{{ route('store-assign') }}" runat="server" onsubmit="return ValidationInputData()">
         @csrf
         <div id="wrapper">
             <!-- Navigation -->
@@ -36,7 +44,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Submission Details:
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Re-Assign user
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">
@@ -48,11 +56,11 @@ if ($currentUser) {
                             </div>
                                     <div class="col-lg-6">
                                     
-                                    <input type="hidden" id="activity_type" name="activity_type" value="3" class="form-control">
+                                    <input type="hidden" id="activity_type" name="activity_type" value="2" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-8">
                                     <label>
                                         Assign To
                                     </label>
@@ -67,24 +75,22 @@ if ($currentUser) {
                                     </p>
                                   </div>
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <label>
-                                        Description
+                                    Comments
                                     </label>
                                     <textarea id="description" name="description" class="form-control"></textarea>
                                     <p class="help-block">
                                     </p>
                                 </div>
-
                             <input type="hidden" id="txtcomplainer_id" name="txtcomplainer_id" value="{{$id}}" class="form-control">
-                            <label>
-                                       Assigned By {{$username}}
-                                    </label>
-                                    <input type="text" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
+                         
+                                    <input type="hidden" id="created_by" name="created_by" value="{{$id}}" placeholder="{{ $username ? $username : '' }}" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            <div class="row">
+
+                            <!-- <div class="row">
                                 <div class="col-lg-12">
                                     <label>
                                         Attachments
@@ -93,9 +99,10 @@ if ($currentUser) {
                                     <p class="help-block">
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
+
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
                                 </div>
                             </div>
