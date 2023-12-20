@@ -36,7 +36,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Assign user
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Submission Details:
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">
@@ -48,7 +48,7 @@ if ($currentUser) {
                             </div>
                                     <div class="col-lg-6">
                                     
-                                    <input type="hidden" id="activity_type" name="activity_type" value="2" class="form-control">
+                                    <input type="hidden" id="activity_type" name="activity_type" value="3" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>

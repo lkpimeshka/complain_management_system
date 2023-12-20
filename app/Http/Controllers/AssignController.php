@@ -117,4 +117,46 @@ class AssignController extends Controller
         return User::find(Auth::id());
     }
     
+    public function completeJob(Request $request)
+    {
+        $loginUersRole = Role::where('id', $this->loginUser()->role)->first();
+        $users = User::join('roles', 'users.role', 'roles.id')
+                    ->where('roles.institute', $loginUersRole->institute)
+                    ->get([
+                        'users.id as id',
+                        'users.name as name'
+                    ]);
+
+                    // var_dump($users);die();
+        return view('assigns.completeJob',['users' => $users]);
+    }
+
+
+
+    // Store Form data in database
+    public function saveComplete_Job(Request $request)
+    {
+        
+        // Form validation
+        $this->validate($request, [
+            'complaint_id' => 'required',
+            'activity_type' => 'required',
+            'description' => 'required',
+            'created_by' => 'required',
+            'assigned_to' => 'required',
+            'attachments' => 'required'
+        ]);
+
+        $data = assign::create([
+            'complaint_id' => $request['complaint_id'],
+            'activity_type' => $request['activity_type'],
+            'description' => $request['description'],
+            'created_by' => Auth::id(),
+            'assigned_to' => $request['assigned_to'],
+            'attachments' => $request['attachments'],
+
+        ]);
+
+        return Redirect::to('/assigns/index')->with('success', 'Job completed Successfully.');
+    }
 }

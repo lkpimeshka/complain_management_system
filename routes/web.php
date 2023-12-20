@@ -54,9 +54,10 @@ Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain']
 
 
 Route::get('assigns/assignUser/{id}', [AssignController::class, 'assignUser'])->middleware('auth');
-Route::post('assign/save', [AssignController::class, 'saveAssign'])->name('store-assign')->middleware('auth');
+Route::post('assigns/save', [AssignController::class, 'saveAssign'])->name('store-assign')->middleware('auth');
 Route::get('assigns/index', [AssignController::class, 'index'])->middleware('auth');
-
+Route::get('assigns/completeJob/{id}', [AssignController::class, 'completeJob'])->middleware('auth');
+Route::post('assigns/save', [AssignController::class, 'saveComplete_Job'])->name('store-assign')->middleware('auth');
 /*Route::get('complain/edit/{id}', [ComplainController::class, 'editAssign'])->middleware('auth');
 Route::post('complain/update', [ComplainController::class, 'updateAssign'])->name('update-complain')->middleware('auth');
 Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
