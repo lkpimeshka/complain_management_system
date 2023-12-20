@@ -5,6 +5,7 @@ use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\AssignController;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -50,6 +51,18 @@ Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->m
 Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
 Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
 Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
+
+
+Route::get('assigns/assignUser/{id}', [AssignController::class, 'assignUser'])->middleware('auth');
+Route::post('assign/save', [AssignController::class, 'saveAssign'])->name('store-assign')->middleware('auth');
+Route::get('assigns/index', [AssignController::class, 'index'])->middleware('auth');
+
+/*Route::get('complain/edit/{id}', [ComplainController::class, 'editAssign'])->middleware('auth');
+Route::post('complain/update', [ComplainController::class, 'updateAssign'])->name('update-complain')->middleware('auth');
+Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
+Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');*/
+
+
 
 Route::get('role/list', [RoleController::class, 'index'])->middleware('auth');
 Route::get('role/create', [RoleController::class, 'createRole'])->middleware('auth');
@@ -104,22 +117,6 @@ Route::get('user/delete/{id}', [UserController::class, 'deleteUser'])->middlewar
 
 
 
-
-Route::get('/data-table', function () {
-    return view('package.indexTable');
-});
-
-// Resource Route for User Details.
-Route::resource('users', UserDetailController::class)->middleware('auth');
-// Route for get users for yajra post request.
-Route::get('get-users', [UserDetailController::class, 'getUsers'])->name('get-users')->middleware('auth');
-Route::get('view-user/{id}', [UserDetailController::class, 'viewUser'])->name('userView')->middleware('auth');
-Route::get('user/changeAccountStatus/{id}', [UserDetailController::class, 'changeAccountStatus'])->middleware('auth');
-// Route::post('updateUser', [UserDetailController::class, 'updateUser'])->name('update-user')->middleware('auth');
-Route::get('upload',[UserDetailController::class, 'index'])->middleware('auth');
-Route::post('crop',[UserDetailController::class, 'cropProfile'])->name('crop')->middleware('auth');
-// Route::get('my-account', [UserDetailController::class, 'myAccount'])->name('my-account')->middleware('auth');
-Route::post('updateAccount', [UserDetailController::class, 'updateAccount'])->name('update-account')->middleware('auth');
 
 
 
