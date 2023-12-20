@@ -22,36 +22,80 @@ $currentUser = User::find(Auth::id());
         </a>
     </li>
 
-@if($currentUser->role == 1) <!-- Admin User -->
-    <li class="nav-header">ARTICLE DETAILS</li>
+@if($currentUser->role == 1 || $currentUser->role == 2 || $currentUser->role == 3) <!-- Admin User -->
+    <li class="nav-header">USER DETAILS</li>
+
+    <li class="nav-item">
+        <a href="{{ URL::to('role/list') }}" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                Roles
+            </p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{{ URL::to('user/list') }}" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                Users
+            </p>
+        </a>
+    </li>
+
+    <li class="nav-header">COMPLAINTS DETAILS</li>
 
     <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
             <p>
-                Articles
+                Complaints
             <i class="fas fa-angle-left right"></i>
             </p>
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-            <a href="{{ URL::to('article/list') }}" class="nav-link">
+            <a href="{{ URL::to('complain/list') }}" class="nav-link">
                 <i class="fa fa-list nav-icon" style="font-size: 13px;"></i>
-                <p>Article List</p>
+                <p>Complaints List</p>
             </a>
             </li>
             <li class="nav-item">
-            <a href="{{ URL::to('article/create') }}" class="nav-link">
+            <a href="{{ URL::to('complain/create') }}" class="nav-link">
                 <i class="fa fa-plus nav-icon" style="font-size: 13px;"></i>
-                <p>Add New</p>
+                <p>New Complaint</p>
             </a>
             </li>
         </ul>
     </li>
+    <li class="nav-header">JOB ASSIGN DETAILS</li>
 
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+                Assign Jobs
+            <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+            <a href="{{ URL::to('assigns/index') }}" class="nav-link">
+                <i class="fa fa-list nav-icon" style="font-size: 13px;"></i>
+                <p>Assigned Jobs List</p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ URL::to('assigns/assignUser/{id}') }}" class="nav-link">
+                <i class="fa fa-plus nav-icon" style="font-size: 13px;"></i>
+                <p>Assing To </p>
+            </a>
+            </li>
+        </ul>
+    </li>
 @endif
 
-@if($currentUser->role == 2) <!-- Customer -->
+@if($currentUser->role == 4) <!-- Customer -->
 
     <li class="nav-item">
         <a href="{{ URL::to('#') }}" class="nav-link">

@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\AssignController;
 
-use App\Http\Controllers\ArticleController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,20 +30,39 @@ Route::get('/home', function () {
 });
 
 Route::view('/test-progress', 'progress'); # test route
+Route::get('/test-mail', [UserController::class, 'testMail']);
 
+// Route::group(['middleware' => 'web', 'prefix' => 'password', 'as' => 'password.'], function () {
+//     // Password reset routes
+//     Route::get('reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('request');
+//     Route::post('email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('email');
+//     Route::get('reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('reset');
+//     Route::post('reset', 'Auth\ResetPasswordController@reset')->name('update');
+// });
 
-
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
-Route::get('article/list', [ArticleController::class, 'index'])->middleware('auth');
-Route::get('article/create', [ArticleController::class, 'createArticle'])->middleware('auth');
-Route::post('article/save', [ArticleController::class, 'saveArticle'])->name('store-article')->middleware('auth');
-Route::get('article/edit/{id}', [ArticleController::class, 'editArticle'])->middleware('auth');
-Route::post('article/update', [ArticleController::class, 'updateArticle'])->name('update-article')->middleware('auth');
-Route::get('article/view/{id}', [ArticleController::class, 'viewArticle'])->middleware('auth');
-Route::get('article/delete/{id}', [ArticleController::class, 'deleteArticle'])->middleware('auth');
+Route::get('complain/list', [ComplainController::class, 'index'])->middleware('auth');
+Route::get('complain/create', [ComplainController::class, 'createComplain'])->middleware('auth');
+Route::post('complain/save', [ComplainController::class, 'saveComplain'])->name('store-complain')->middleware('auth');
+Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->middleware('auth');
+Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
+Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
+Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
+
+
+Route::get('assigns/assignUser/{id}', [AssignController::class, 'assignUser'])->middleware('auth');
+Route::post('assign/save', [AssignController::class, 'saveAssign'])->name('store-assign')->middleware('auth');
+Route::get('assigns/index', [AssignController::class, 'index'])->middleware('auth');
+
+/*Route::get('complain/edit/{id}', [ComplainController::class, 'editAssign'])->middleware('auth');
+Route::post('complain/update', [ComplainController::class, 'updateAssign'])->name('update-complain')->middleware('auth');
+Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
+Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');*/
+
+
 
 Route::get('role/list', [RoleController::class, 'index'])->middleware('auth');
 Route::get('role/create', [RoleController::class, 'createRole'])->middleware('auth');
@@ -50,6 +72,7 @@ Route::post('role/update', [RoleController::class, 'updateRole'])->name('update-
 Route::get('role/view/{id}', [RoleController::class, 'viewRole'])->middleware('auth');
 Route::get('role/delete/{id}', [RoleController::class, 'deleteRole'])->middleware('auth');
 
+Route::get('my-account', [UserController::class, 'myAccount'])->middleware('auth');
 Route::get('user/list', [UserController::class, 'index'])->middleware('auth');
 Route::get('user/create', [UserController::class, 'createUser'])->middleware('auth');
 Route::post('user/save', [UserController::class, 'saveUser'])->name('add-user')->middleware('auth');
@@ -93,23 +116,8 @@ Route::get('user/delete/{id}', [UserController::class, 'deleteUser'])->middlewar
 
 
 
-Route::get('/data-table', function () {
-    return view('package.indexTable');
-});
 
-Route::get('/send-mail', [App\Http\Controllers\HomeController::class, 'sendMail']);
 
-// Resource Route for User Details.
-Route::resource('users', UserDetailController::class)->middleware('auth');
-// Route for get users for yajra post request.
-Route::get('get-users', [UserDetailController::class, 'getUsers'])->name('get-users')->middleware('auth');
-Route::get('view-user/{id}', [UserDetailController::class, 'viewUser'])->name('userView')->middleware('auth');
-Route::get('user/changeAccountStatus/{id}', [UserDetailController::class, 'changeAccountStatus'])->middleware('auth');
-// Route::post('updateUser', [UserDetailController::class, 'updateUser'])->name('update-user')->middleware('auth');
-Route::get('upload',[UserDetailController::class, 'index'])->middleware('auth');
-Route::post('crop',[UserDetailController::class, 'cropProfile'])->name('crop')->middleware('auth');
-Route::get('my-account', [UserDetailController::class, 'myAccount'])->name('my-account')->middleware('auth');
-Route::post('updateAccount', [UserDetailController::class, 'updateAccount'])->name('update-account')->middleware('auth');
 
 
 
