@@ -51,7 +51,9 @@
                         <td>{{$complaint->location}}</td>
                         <td>{{$problem->name}}</td>
                         <td>{{$complaint->txtcomplaint_remarks}}</td>
-                        <td style="background-color: <?php echo $statusModel->name === 'Pending' ? 'orange' : ($statusModel->name === 'InProgress' ? 'green' : 'red'); ?>; padding: 5px 10px;">{{$statusModel->name}}</td>
+                        <td style="background-color: <?php echo $statusModel->name === 'Pending' ? 'orange' : ($statusModel->name === 'InProgress' ? 'green' : ($statusModel->name === 'Complete' ? 'blue' : ($statusModel->name === 'Finished' ? 'purple' : 'red'))); ?>; padding: 5px 10px;"><?php echo $statusModel->name; ?></td>
+
+
                         <td>{{$complaint->created_at}}</td>
                         <td>{{$complaint->updated_at}}</td>
                         <td>
