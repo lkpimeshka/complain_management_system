@@ -51,7 +51,7 @@
                         <td>{{$complaint->location}}</td>
                         <td>{{$problem->name}}</td>
                         <td>{{$complaint->txtcomplaint_remarks}}</td>
-                        <td>{{$statusModel->name}}</td>
+                        <td style="background-color: <?php echo $statusModel->name === 'Pending' ? 'orange' : ($statusModel->name === 'InProgress' ? 'green' : 'red'); ?>; padding: 5px 10px;">{{$statusModel->name}}</td>
                         <td>{{$complaint->created_at}}</td>
                         <td>{{$complaint->updated_at}}</td>
                         <td>
@@ -59,6 +59,10 @@
                                 <a href="{{ url('assigns/assignUser/'.$complaint->id)}}" class="btn btn-success btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Assign To</a>
                             @elseif($complaint->status == 2)
                                 <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-primary btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Complete Job</a>
+                            @elseif($complaint->status == 3)
+                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-danger btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assigned</a>
+                            @elseif($complaint->status == 4)
+                                <a href="{{ url('assigns/assignUser/'.$activityRecord->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Finished</a>
                             @endif
                             <a href="{{url('complain/view/'.$complaint->id)}}" class="btn btn-success btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             <a href="{{url('complain/edit/'.$complaint->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
