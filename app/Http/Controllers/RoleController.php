@@ -16,6 +16,10 @@ class RoleController extends Controller
 
     public function index()
     { 
+        if (!(Privilege::checkPrivilege(2))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $currentUserRole = Role::find($this->loginUser()->role);
 
         if($currentUserRole->id == 1){
@@ -39,6 +43,10 @@ class RoleController extends Controller
 
     public function createRole(Request $request)
     {
+        if (!(Privilege::checkPrivilege(1))) {
+            return redirect()->route('role-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             $userPrivileges = Privilege::all();
         }else{
@@ -88,6 +96,10 @@ class RoleController extends Controller
 
     public function editRole($id)
     {
+        if (!(Privilege::checkPrivilege(3))) {
+            return redirect()->route('role-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             $userPrivileges = Privilege::all();
         }else{
@@ -165,6 +177,10 @@ class RoleController extends Controller
 
     public function deleteRole($id)
     {
+        if (!(Privilege::checkPrivilege(4))) {
+            return response()->json(['error' => 'You don\'t have Sufficient Permissions to Perform this Operation.'], 403);
+        }
+
         if($id == 1 || $id == 2 || $id == 3 || $id == 4){
             return response()->json(['error' => 'Unauthorized Action.'], 403);
         }

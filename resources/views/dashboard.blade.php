@@ -29,3 +29,11 @@
 </div>
 <!-- /.content-header -->
 @endsection
+
+@section('script')
+@if(Session::has('error'))
+  <script>
+    toastr.error("{{ Session::get('error') }}");
+  </script>
+@endif
+@endsection

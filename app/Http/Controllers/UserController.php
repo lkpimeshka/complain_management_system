@@ -18,6 +18,11 @@ class UserController extends Controller
 
     public function index()
     {
+
+        if (!(Privilege::checkPrivilege(6))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             $user = User::all();
         }else{
@@ -32,6 +37,10 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
+        if (!(Privilege::checkPrivilege(5))) {
+            return redirect()->route('user-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             // $userRoles = Role::where('id', '<>', 1)->get();
             $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
@@ -75,6 +84,10 @@ class UserController extends Controller
 
     public function editUser($id)
     {
+        if (!(Privilege::checkPrivilege(7))) {
+            return redirect()->route('user-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $user = User::where('id', $id)->first();
         if($this->loginUser()->role == 1){
             $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
@@ -143,6 +156,9 @@ class UserController extends Controller
 
     public function deleteUser($id)
     {
+        if (!(Privilege::checkPrivilege(8))) {
+            return response()->json(['error' => 'You don\'t have Sufficient Permissions to Perform this Operation.'], 403);
+        }
 
         $user = User::find($id);
 
