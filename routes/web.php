@@ -72,7 +72,7 @@ Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain']
 
 
 
-Route::get('role/list', [RoleController::class, 'index'])->middleware('auth');
+Route::get('role/list', [RoleController::class, 'index'])->name('role-list')->middleware('auth');
 Route::get('role/create', [RoleController::class, 'createRole'])->middleware('auth');
 Route::post('role/save', [RoleController::class, 'saveRole'])->name('store-role')->middleware('auth');
 Route::get('role/edit/{id}', [RoleController::class, 'editRole'])->middleware('auth');
@@ -81,7 +81,7 @@ Route::get('role/view/{id}', [RoleController::class, 'viewRole'])->middleware('a
 Route::get('role/delete/{id}', [RoleController::class, 'deleteRole'])->middleware('auth');
 
 Route::get('my-account', [UserController::class, 'myAccount'])->middleware('auth');
-Route::get('user/list', [UserController::class, 'index'])->middleware('auth');
+Route::get('user/list', [UserController::class, 'index'])->name('user-list')->middleware('auth');
 Route::get('user/create', [UserController::class, 'createUser'])->middleware('auth');
 Route::post('user/save', [UserController::class, 'saveUser'])->name('add-user')->middleware('auth');
 Route::get('user/edit/{id}', [UserController::class, 'editUser'])->middleware('auth');
