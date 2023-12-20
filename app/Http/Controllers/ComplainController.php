@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\Complain;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Institutes;
 use App\Models\Problem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Redirect;
 
 class ComplainController extends Controller
@@ -13,7 +15,11 @@ class ComplainController extends Controller
 
     public function index()
     { 
-        $complaints = Complain::all();  
+        $role = Role::where('id', $this->loginUser()->role)->first();
+        $instituteProblem = Problem::where('institutes', $role->institute)->get();
+        $problemIds = $instituteProblem->pluck('id');
+        // var_dump($problemIds);die();
+        $complaints = Complain::whereIn('problem_type', $problemIds)->get();  
         return view('complaints.index',['complaints' => $complaints]);
     }
 
@@ -35,22 +41,19 @@ public function createComplain(Request $request)
         
         // Form validation
         $this->validate($request, [
-            'txtcomplainer_id' => 'required',
             'location' => 'required',
             'problem_type' => 'required',
-            'division_id' => 'required',
             'txtcomplaint_remarks' => 'required',
             'FileDocumentAttachment' => 'required'
         ]);
 
         $data = Complain::create([
-            'txtcomplainer_id' => $request['txtcomplainer_id'],
+            'txtcomplainer_id' => Auth::id(),
             'location' => $request['location'],
             'problem_type' => $request['problem_type'],
-            'division_id' => $request['division_id'],
             'txtcomplaint_remarks' => $request['txtcomplaint_remarks'],
             'FileDocumentAttachment' => $request['FileDocumentAttachment'],
-
+            'status' => 1,
         ]);
 
         return Redirect::to('/complain/list')->with('success', 'Camplaint saved Successfully.');
@@ -106,6 +109,11 @@ public function createComplain(Request $request)
     {
         $complain = Complain::where('id', $id)->first();
         return view('complaints.assign_user', ['complain'=>$complain]);
+    }
+
+    public function loginUser()
+    {
+        return User::find(Auth::id());
     }
     
 }
