@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Complain;
 use App\Models\User;
+use App\Models\Branch;
 use App\Models\Role;
 use App\Models\Institutes;
 use App\Models\Problem;
@@ -32,7 +33,8 @@ public function createComplain(Request $request)
 {
     
     $problems = Problem::all();
-    return view('complaints.createComplain', ['problems' => $problems]);
+    $locations = Branch::all();
+    return view('complaints.createComplain', ['problems' => $problems, 'locations' => $locations]);
 
 }
     // Store Form data in database

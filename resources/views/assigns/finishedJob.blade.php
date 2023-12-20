@@ -18,16 +18,7 @@ if ($currentUser) {
 } else {
     // User not found
 }
-
-
-
-                       
-                     //   $complain_id = App\Models\User::where('id',$complain->id)->first();
-                      //  $problem = App\Models\Problem::where('id',$complaint->problem_type)->first();
-
-                    
 ?>
-
 
 @extends('layouts.app')
 
@@ -44,7 +35,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Assign user
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Finalize Job.
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">
@@ -56,24 +47,14 @@ if ($currentUser) {
                             </div>
                                     <div class="col-lg-6">
                                     
-                                    <input type="hidden" id="activity_type" name="activity_type" value="2" class="form-control">
+                                    <input type="hidden" id="activity_type" name="activity_type" value="5" class="form-control">
                                     <p class="help-block">
                                     </p>
                                 </div>
-                                <div class="col-lg-8">
-                                    <label>
-                                        Assign To
-                                    </label>
-                                    <select id="assigned_to" name="assigned_to" class="form-control chosen-select" onchange="__doPostBack('assigned_to','')">
-                                        @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
-                                        @endforeach
-                                        
+                                <div>
+                                        <input type="hidden" id="assigned_to" name="assigned_to" value="{{$id}}" class="form-control"> 
                                         <!--<option value="Duration too high">No feedback for inquiries</option>-->
-                                    </select>
-                                    <p class="help-block">
-                                    </p>
-                                  </div>
+                               </div> 
                             <div class="row">
                                 <div class="col-lg-8">
                                     <label>
@@ -103,7 +84,7 @@ if ($currentUser) {
 
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <input type="submit" name="send" value="Submit" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
+                                    <input type="submit" name="send" value="Finish Task" class="btn btn-info btn-block" style="margin-bottom: 20px; margin-top: 20px;">
                                 </div>
                             </div>
                         </div>
