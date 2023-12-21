@@ -45,12 +45,23 @@ Auth::routes(['verify' => true]);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
 Route::get('complain/list', [ComplainController::class, 'index'])->middleware('auth');
+Route::get('complain/my-complaints', [ComplainController::class, 'assigedComplaints'])->middleware('auth');
+Route::get('complain/reassign-complaints', [ComplainController::class, 'reAssignedComplaints'])->middleware('auth');
 Route::get('complain/create', [ComplainController::class, 'createComplain'])->middleware('auth');
 Route::post('complain/save', [ComplainController::class, 'saveComplain'])->name('store-complain')->middleware('auth');
 Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->middleware('auth');
 Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
 Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
 Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
+
+Route::get('complain/assign/{id}', [ComplainController::class, 'assignUser'])->middleware('auth');
+Route::post('complain/save-assign', [ComplainController::class, 'saveAssign'])->name('save-assign')->middleware('auth');
+Route::get('complain/completeJob/{id}', [ComplainController::class, 'completeJob'])->middleware('auth');
+Route::post('complain/save-complete', [ComplainController::class, 'saveComplete'])->name('save-complete')->middleware('auth');
+Route::get('complain/finishedJob/{id}', [ComplainController::class, 'finishedJob'])->middleware('auth');
+Route::post('complain/save-finish', [ComplainController::class, 'savefinish'])->name('save-finish')->middleware('auth');
+Route::get('complain/reAssignUser/{id}', [ComplainController::class, 'reAssignsUser'])->middleware('auth');
+Route::post('complain/save-re-assign', [ComplainController::class, 'saveReAssign'])->name('save-re-assign')->middleware('auth');
 
 
 Route::get('assigns/assignUser/{id}', [AssignController::class, 'assignUser'])->middleware('auth');

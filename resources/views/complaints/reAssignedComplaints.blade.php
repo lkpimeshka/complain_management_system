@@ -15,14 +15,9 @@ $privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivileg
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h2 style="padding-top: 20px; padding-bottom: 10px;">Complaints</h2>
+            <h2 style="padding-top: 20px; padding-bottom: 10px;">Re-Assigned Complaints</h2>
         </div>
 
-        @if(Auth::user()->role == 4)
-            <div class="col-md-6">
-                <a href="{{url('complain/create')}}" class="btn btn-md btn-success" style="margin-top: 20px; float: right">New Complaint</a>
-            </div>
-        @endif
     </div>
     <hr/>
 
@@ -30,7 +25,7 @@ $privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivileg
         <thead>
             <tr>
                 <th>Complait ID</th>
-                <th>Complainer</th>
+                <th>Assign By</th>
                 <th>Branch</th>
                 <th>Problem Type</th>
                 <th>Description</th>
@@ -51,6 +46,7 @@ $privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivileg
                             }
                         }
                         $complaner = App\Models\User::where('id',$complaint->txtcomplainer_id)->first();
+                        $assignedBy = App\Models\User::where('id',$complaint->assigned_by)->first();
                         $problem = App\Models\Problem::where('id',$complaint->problem_type)->first();
                         $branch = App\Models\Branch::where('id',$complaint->location)->first();
 
@@ -58,33 +54,19 @@ $privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivileg
 
                     <tr>
                         <td>{{$complaint->id}}</td>
-                        <td>{{$complaner->name}}</td>
+                        <td>{{$assignedBy->name}}</td>
                         <td>{{$branch->name}}</td>
                         <td>{{$problem->name}}</td>
                         <td>{{$complaint->txtcomplaint_remarks}}</td>
                         <td style="background-color: <?php echo $statusModel->name === 'Pending' ? 'orange' : ($statusModel->name === 'InProgress' ? 'green' : ($statusModel->name === 'Complete' ? 'blue' : ($statusModel->name === 'Finished' ? 'purple' : 'red'))); ?>; padding: 5px 10px;"><?php echo $statusModel->name; ?></td>
                         <td>{{$complaint->created_at}}</td>
                         <td>
-                            @if($lgUser->role != 1 && $lgUser->role != 4)
-                                @if($complaint->status == 1)
-                                    @if ($privilegeList && in_array(13, $privilegeList))
-                                        <a href="{{ url('complain/assign/'.$complaint->id)}}" class="btn btn-success btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Assign To</a>
-                                    @endif
-                                @elseif($complaint->status == 3)
-                                    @if ($privilegeList && in_array(15, $privilegeList))
-                                        <a href="{{ url('complain/finishedJob/'.$complaint->id)}}" class="btn btn-warning btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Finished</a>
-                                    @endif
-                                    @if ($privilegeList && in_array(13, $privilegeList))
-                                        <a href="{{ url('complain/reAssignUser/'.$complaint->id)}}" class="btn btn-danger btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Re-Assign</a>
-                                    @endif
+                            @if($complaint->status == 4)
+                                @if ($privilegeList && in_array(14, $privilegeList))
+                                    <a href="{{ url('complain/completeJob/'.$complaint->id)}}" class="btn btn-primary btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Complete Job</a>
                                 @endif
                             @endif
                             <a href="{{url('complain/view/'.$complaint->id)}}" class="btn btn-secondary btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            @if($lgUser->role != 1 && $complaint->status == 1)
-                                @if($lgUser->role == 4)
-                                    <a href="{{url('complain/edit/'.$complaint->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
-                                @endif
-                            @endif
                         </td>
                     </tr>
                 @endforeach
