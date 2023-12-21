@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Branch;
 use App\Models\Privilege;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,11 @@ class UserController extends Controller
 
     public function index()
     {
+
+        if (!(Privilege::checkPrivilege(6))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             $user = User::all();
         }else{
@@ -32,6 +38,10 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
+        if (!(Privilege::checkPrivilege(5))) {
+            return redirect()->route('user-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         if($this->loginUser()->role == 1){
             // $userRoles = Role::where('id', '<>', 1)->get();
             $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
@@ -40,7 +50,8 @@ class UserController extends Controller
             $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get(); 
         }
         
-        return view('user.createUser',['role' => $this->loginUser()->role, 'userRoles' => $userRoles]);
+        $branches = Branch::all();
+        return view('user.createUser',['role' => $this->loginUser()->role, 'userRoles' => $userRoles, 'branches' => $branches]);
     }
 
     public function saveUser(Request $request)
@@ -55,6 +66,7 @@ class UserController extends Controller
             'nic' => ['required', 'string'],
             'address_line_1' => ['required', 'string', 'max:512'],
             'city' => ['required', 'string', 'max:255'],
+            'branch' => ['required'],
             
         ]);
 
@@ -68,6 +80,7 @@ class UserController extends Controller
         $user->address_line_1 = $request->address_line_1;
         $user->address_line_2 = $request->address_line_2;
         $user->city = $request->city;
+        $user->branch = $request->branch;
         $user->save();
 
         return Redirect::to('/user/list')->with('success', "Cheers! New User Added Successfully.");
@@ -75,6 +88,10 @@ class UserController extends Controller
 
     public function editUser($id)
     {
+        if (!(Privilege::checkPrivilege(7))) {
+            return redirect()->route('user-list')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $user = User::where('id', $id)->first();
         if($this->loginUser()->role == 1){
             $userRoles = Role::whereNotIn('id', [1, 2, 3, 4])->get();
@@ -83,7 +100,8 @@ class UserController extends Controller
             $userRoles = Role::where('institute', $loginUserRole->institute)->whereNotIn('id', [1, 2, 3, 4])->get();
         }
 
-        return view('user.editUser',['role' => $this->loginUser()->role, 'user' => $user, 'userRoles' => $userRoles]);
+        $branches = Branch::all();
+        return view('user.editUser',['role' => $this->loginUser()->role, 'user' => $user, 'userRoles' => $userRoles, 'branches' => $branches]);
     }
 
     public function updateUser(Request $request)
@@ -97,6 +115,7 @@ class UserController extends Controller
             'nic' => 'required',
             'address_line_1' => 'required',
             'city' => 'required',
+            'branch' => ['required'],
         ]);
 
         User::where('id', $request['id'])
@@ -109,6 +128,7 @@ class UserController extends Controller
                     'address_line_1' => $request['address_line_1'],
                     'address_line_2' => $request['address_line_2'],
                     'city' => $request['city'],
+                    'branch' => $request['branch'],
                 ]);
 
         return Redirect::to('/user/list')->with('success', 'User #'.$request['id'].' updated Successfully.');
@@ -143,6 +163,9 @@ class UserController extends Controller
 
     public function deleteUser($id)
     {
+        if (!(Privilege::checkPrivilege(8))) {
+            return response()->json(['error' => 'You don\'t have Sufficient Permissions to Perform this Operation.'], 403);
+        }
 
         $user = User::find($id);
 
