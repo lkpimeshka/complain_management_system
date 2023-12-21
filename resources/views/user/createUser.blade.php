@@ -95,6 +95,15 @@
                                 </span>
                             @enderror
                         </div>
+
+                        <div class="col-sm-6" style="margin-bottom: 5px;">
+                            <label>Branch*</label>
+                            <select class="form-control" id="branch" name="branch">
+                                @foreach($branches as $branch)
+                                    <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <div class="row">

@@ -88,6 +88,17 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="district">{{ __('District') }}</label>
+                                <?php $districts = App\Models\Branch::all(); ?>
+
+                                <select class="form-control" id="district" name="district">
+                                    @foreach ($districts as $k => $district)
+                                        <option value="{{$district->id}}" {{ $district->id == old('district') ? 'selected' : '' }}>{{$district->name}}</option>
+                                    @endforeach
+                                </select>                       
+                            </div>
                         </div>
 
                         <div class="row">
