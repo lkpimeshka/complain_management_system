@@ -35,7 +35,7 @@ if ($currentUser) {
                 <div class="col-md-12 graphs">
                     <div class="xs"><br><br>
                         <h3>
-                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Finalize Job.
+                            <i class="fa fa-solid fa-check"></i>Finalize Job.
                         </h3>
                         <div class="well1 white" style="min-height: 700px;">
                             <div class="row">

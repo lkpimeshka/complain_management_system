@@ -25,6 +25,7 @@
                     <th>Institute</th>
                 @endif
                 <th>City</th>
+                <th>Branch</th>
                 <th></th>
             </tr>
         </thead>
@@ -45,6 +46,8 @@
                             $roleModal = App\Models\Role::where('id', $user->role)->first();
                             $roleName = $roleModal->name;
                         }
+
+                        $branch = App\Models\Branch::find($user->branch);
                     ?>
 
                     <tr>
@@ -57,6 +60,7 @@
                             <td>{{$roleModal->institutes_name}}</td>
                         @endif
                         <td>{{$user->city}}</td>
+                        <td>{{$branch->name}}</td>
                         <td>
                             <a href="{{url('user/view/'.$user->id)}}" class="btn btn-success btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             <a href="{{url('user/edit/'.$user->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
