@@ -31,7 +31,7 @@
     
                             <div class="col-sm-6" style="margin-bottom: 5px;">
                                 <label>Email*</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" value="{{$user->email}}">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" value="{{$user->email}}" readonly>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -83,6 +83,15 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+
+                            <div class="col-sm-6" style="margin-bottom: 5px;">
+                                <label>Branch*</label>
+                                <select class="form-control" id="branch" name="branch">
+                                    @foreach($branches as $branch)
+                                        <option value="{{$branch->id}}" {{ $branch->id == $user->branch ? 'selected' : '' }}>{{$branch->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
     

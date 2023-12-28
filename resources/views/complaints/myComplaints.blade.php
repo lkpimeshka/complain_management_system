@@ -1,0 +1,77 @@
+<?php 
+use App\Models\Assign; 
+use App\Models\RolePrivilege; 
+
+$lgUser = Illuminate\Support\Facades\Auth::user();
+
+$rolesWithPrivilege = RolePrivilege::where('role_id', $lgUser->role)->pluck('privileges');
+$privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivilege[0], true) : null;
+
+?>
+
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 style="padding-top: 20px; padding-bottom: 10px;">Assigned Complaints</h2>
+        </div>
+
+    </div>
+    <hr/>
+
+    <table id="datatable" class="display nowrap datatable" style="width:100%; padding-top: 20px;">
+        <thead>
+            <tr>
+                <th>Complait ID</th>
+                <th>Assign By</th>
+                <th>Branch</th>
+                <th>Problem Type</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Complaint Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if($complaints)
+                @foreach ($complaints as $k => $complaint)
+                    <?php
+
+                        $statusModel = App\Models\Status::where('id', $complaint->status)->first();
+                        if($complaint->status != 1){
+                            if($complaint->status == 2){
+                                $activityRecord = Assign::where('complaint_id', $complaint->id)->where('activity_type', 1)->first();
+                            }
+                        }
+                        $complaner = App\Models\User::where('id',$complaint->txtcomplainer_id)->first();
+                        $assignedBy = App\Models\User::where('id',$complaint->assigned_by)->first();
+                        $problem = App\Models\Problem::where('id',$complaint->problem_type)->first();
+                        $branch = App\Models\Branch::where('id',$complaint->location)->first();
+
+                    ?>
+
+                    <tr>
+                        <td>{{$complaint->id}}</td>
+                        <td>{{$assignedBy->name}}</td>
+                        <td>{{$branch->name}}</td>
+                        <td>{{$problem->name}}</td>
+                        <td>{{$complaint->txtcomplaint_remarks}}</td>
+                        <td style="background-color: <?php echo $statusModel->name === 'Pending' ? 'orange' : ($statusModel->name === 'InProgress' ? 'green' : ($statusModel->name === 'Complete' ? 'blue' : ($statusModel->name === 'Finished' ? 'purple' : 'red'))); ?>; padding: 5px 10px;"><?php echo $statusModel->name; ?></td>
+                        <td>{{$complaint->created_at}}</td>
+                        <td>
+                            @if($complaint->status == 2)
+                                @if ($privilegeList && in_array(14, $privilegeList))
+                                    <a href="{{ url('complain/completeJob/'.$complaint->id)}}" class="btn btn-primary btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Complete Job</a>
+                                @endif
+                            @endif
+                            <a href="{{url('complain/view/'.$complaint->id)}}" class="btn btn-secondary btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
+@endsection
