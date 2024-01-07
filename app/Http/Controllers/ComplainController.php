@@ -19,7 +19,7 @@ class ComplainController extends Controller
 {
 
     public function index()
-    { 
+    {
         if($this->loginUser()->role == 1){
             $complaints = Complain::all();
         } else if($this->loginUser()->role == 4){
@@ -28,15 +28,15 @@ class ComplainController extends Controller
             $role = Role::where('id', $this->loginUser()->role)->first();
             $instituteProblem = Problem::where('institutes', $role->institute)->get();
             $problemIds = $instituteProblem->pluck('id');
-            $complaints = Complain::where('location', Auth::user()->branch)->whereIn('problem_type', $problemIds)->get();  
+            $complaints = Complain::where('location', Auth::user()->branch)->whereIn('problem_type', $problemIds)->get();
         }
-            
+
         // var_dump($role->institute);die();
         return view('complaints.index',['complaints' => $complaints]);
     }
 
     public function assigedComplaints()
-    { 
+    {
 
         if (!(Privilege::checkPrivilege(14))) {
             return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
@@ -55,7 +55,7 @@ class ComplainController extends Controller
     }
 
     public function reAssignedComplaints()
-    { 
+    {
 
         if (!(Privilege::checkPrivilege(14))) {
             return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
@@ -81,7 +81,7 @@ class ComplainController extends Controller
 
         return view('complaints.createComplain', ['problems' => $problems, 'locations' => $locations]);
     }
-    
+
     public function saveComplain(Request $request)
     {
         $this->validate($request, [
@@ -134,7 +134,7 @@ class ComplainController extends Controller
             'problem_type' => 'required',
             'description' => 'required',
         ]);
-       
+
         Complain::where('id', $request['id'])
                 ->update([
                     'location' => $request['location'],
@@ -149,7 +149,7 @@ class ComplainController extends Controller
     public function assignUser($id)
     {
         $complaint = Complain::where('id', $id)->first();
-        
+
         $rolesWithPrivilege = RolePrivilege::whereJsonContains('privileges', '14')->pluck('role_id')->toArray();
         $loginUersRole = Role::where('id', $this->loginUser()->role)->first();
         $users = User::join('roles', 'users.role', 'roles.id')
@@ -166,7 +166,7 @@ class ComplainController extends Controller
 
     public function saveAssign(Request $request)
     {
-        
+
         $this->validate($request, [
             'complaint_id' => 'required',
             'assigned_to' => 'required',
@@ -198,7 +198,7 @@ class ComplainController extends Controller
 
     public function saveComplete(Request $request)
     {
-        
+
         $this->validate($request, [
             'complaint_id' => 'required',
             'description' => 'required',
@@ -244,7 +244,7 @@ class ComplainController extends Controller
 
     public function savefinish(Request $request)
     {
-        
+
         $this->validate($request, [
             'complaint_id' => 'required',
             'description' => 'required',
@@ -269,7 +269,7 @@ class ComplainController extends Controller
     public function reAssignsUser($id)
     {
         $complaint = Complain::where('id', $id)->first();
-        
+
         $rolesWithPrivilege = RolePrivilege::whereJsonContains('privileges', '14')->pluck('role_id')->toArray();
         $loginUersRole = Role::where('id', $this->loginUser()->role)->first();
         $users = User::join('roles', 'users.role', 'roles.id')
@@ -286,7 +286,7 @@ class ComplainController extends Controller
 
     public function saveReAssign(Request $request)
     {
-        
+
         $this->validate($request, [
             'complaint_id' => 'required',
             'assigned_to' => 'required',
@@ -330,5 +330,39 @@ class ComplainController extends Controller
     {
         return User::find(Auth::id());
     }
-    
+
 }
+public function viewComplainProgress($id)
+    {
+        $complain = Complain::join('users', 'complaints.txtcomplainer_id', 'users.id')
+                            ->join('branches', 'complaints.location', 'branches.id')
+                            ->join('problem_type', 'complaints.problem_type', 'problem_type.id')
+                            ->join('activity_types', 'complaints.status', 'activity_types.id')
+                            ->where('complaints.id', $id)
+                            ->first([
+                                'complaints.*',
+                                'users.name as complainer',
+                                'problem_type.institutes as institute_id',
+                                'problem_type.name as problem_name',
+                                'branches.name as location_name',
+                            ]);
+        return view('complaints.viewProgress', ['complain'=>$complain]);
+    }
+
+    public function viewComplainAction($id)
+    {
+        $activity = Assign::find($id);
+        $complain = Complain::join('users', 'complaints.txtcomplainer_id', 'users.id')
+                            ->join('branches', 'complaints.location', 'branches.id')
+                            ->join('problem_type', 'complaints.problem_type', 'problem_type.id')
+                            ->join('activity_types', 'complaints.status', 'activity_types.id')
+                            ->where('complaints.id', $activity->complaint_id)
+                            ->first([
+                                'complaints.*',
+                                'users.name as complainer',
+                                'problem_type.institutes as institute_id',
+                                'problem_type.name as problem_name',
+                                'branches.name as location_name',
+                            ]);
+        return view('complaints.viewActivity', ['complain'=>$complain, 'activity' => $activity]);
+    }

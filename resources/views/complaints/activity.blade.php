@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Crime Progress</title>
+    <title>View Activity Details</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -93,90 +93,75 @@
 <body>
 
     <?php
-        use App\Models\Status;
+        use App\Models\User;
         use App\Models\Assign;
         use App\Models\Attachment;
-        use Illuminate\Support\Str;
 
-        $statusModel = Status::where('id', $complain->status)->first();
-        $evidence = Attachment::where('record_id', $complain->id)->where('type', 1)->first();
-        $activityList = Assign::where('complaint_id', $complain->id)->orderBy('id', 'asc')->get();
+        $activityType = Assign::getActTypeName($activity->activity_type);
+        $proof = Attachment::where('record_id', $activity->id)->where('type', 2)->first();
+        $createdBy = User::find($activity->created_by);
 
     ?>
 
     <header class="bg-dark text-white">
-        <h2 style="color: white">View Crime Progress | Complaint #{{$complain->id}}</h2>
+        <h2 style="color: white">View {{$activityType}} Activity Details | Complaint #{{$complain->id}}</h2>
     </header>
 
     <section class="container">
         <h2>Complaint Against {{($complain->institute_id == 1)? 'Wildlife' : 'Environmental'}} Crime</h2>
         <div class="card" style="padding: 1rem;">
-            <h5>Complaint Description</h5>
-            <p>{{$complain->txtcomplaint_remarks}}</p>
 
             <h5>Complaint Info</h5>
             <div class="row">
-                <div class="col-sm-6">
-                    <label>Type : {{$complain->problem_name}}</label>
-                </div>
-                <div class="col-sm-6">
-                    <label>Location : {{$complain->location_name}}</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Complainer : {{$complain->complainer}}</label>
-                </div>
-                <div class="col-sm-6">
-                    <label>Status : {{$statusModel->name}}</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Created Date : {{$complain->created_at}}</label>
+                <div class="col-sm-12">
+                    <label>{{$complain->problem_name}}</label>
+                    <p>{{$complain->txtcomplaint_remarks}}</p>
                 </div>
             </div>
 
-            @if($evidence)
-                <h5 style="margin-top: 20px;">Evidence</h5>
+            <h5>Action Info</h5>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Description</label>
+                    <p>{{$activity->description}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Type : {{$activityType}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label>Created Date : {{$activity->created_at}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>{{$activityType}} By : {{$createdBy->name}}</label>
+                </div>
+                @if($activity->assigned_to)
+                    <?php $assignedTo = User::find($activity->assigned_to); ?>
+                    <div class="col-sm-6">
+                        <label>{{$activityType}} To : {{$assignedTo->name}}</label>
+                    </div>
+                @endif
+            </div>
+
+            @if($proof)
+                <h5 style="margin-top: 20px;">Proof</h5>
 
                 <?php
-                    $attachments = json_decode($evidence->attachments);
+                    $attachments = json_decode($proof->attachments);
                 ?>
                 <div class="row">
                     @foreach($attachments as $attachment)
                         <div class="col-sm-4">
-                            <img src="{{asset('images/attachments/'.$attachment)}}" width="100%" />
+                            <img src="{{asset('images/proof/'.$attachment)}}" width="100%" />
                         </div>
                     @endforeach
                 </div>
             @endif
         </div>
 
-
-        @if(count($activityList) > 0)
-            <div class="row" style="margin-top: 10px; text-align: center">
-                <div class="col-sm-12">
-                    <h5>Complaint Progress</h5>
-                </div>
-            </div>
-
-            <div class="row">
-                @foreach($activityList as $k => $activity)
-                    <div class="col-sm-4">
-                        <div class="card step-card">
-                            <h5>Step {{++$k}} [ {{Assign::getActTypeName($activity->activity_type)}} ]</h5>
-                            <p>{{ Str::limit($activity->description, 60, '...') }}</p>
-                            <div class="row" style="text-align: right">
-                                <div class="col-sm-12">
-                                    <a href="{{url('complain/view-action/'.$activity->id)}}" class="btn btn-primary btn-sm" title="View Activity Details"  target="_blank">View</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
     </section>
 
     <footer class="bg-dark text-white">
