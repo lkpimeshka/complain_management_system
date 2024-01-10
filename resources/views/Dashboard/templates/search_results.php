@@ -40,9 +40,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <th>#</th>
                 <th>Subject</th>
-                <th>Engineer Status</th>
                 <th>Complaint Type</th>
-                <th>Product Serial No.</th>
+                <th>Complaint Serial No.</th>
                 <th>Opened Since</th>
                 <!-- Add other headers if needed -->
             </tr>
@@ -53,9 +52,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
                         <td><?php echo htmlspecialchars($row['subject']); ?></td>
-                        <td><?php echo htmlspecialchars($row['engineer_status']); ?></td>
                         <td><?php echo htmlspecialchars($row['complaint_type']); ?></td>
-                        <td><?php echo htmlspecialchars($row['product_serial']); ?></td>
+                        <td><?php echo htmlspecialchars($row['complaint_serial_no']); ?></td>
                         <td><?php echo htmlspecialchars($row['opened_since']); ?></td>
                         <!-- Add other columns if needed -->
                     </tr>
