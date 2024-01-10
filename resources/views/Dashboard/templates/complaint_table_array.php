@@ -6,9 +6,8 @@
             <tr>
                 <th>#</th>
                 <th>Subject</th>
-                <th>Engineer Status</th>
                 <th>Complaint Type</th>
-                <th>Product Serial No.</th>
+                <th>Complaint serial No.</th>
                 <th>Opened Since</th>
                 <th>Actions</th>
             </tr>
@@ -18,9 +17,8 @@
             <tr>
                 <td><?= htmlspecialchars($complaint['id']) ?></td>
                 <td><?= htmlspecialchars($complaint['subject']) ?></td>
-                <td><?= htmlspecialchars($complaint['engineer_status']) ?></td>
                 <td><?= htmlspecialchars($complaint['complaint_type']) ?></td>
-                <td><?= htmlspecialchars($complaint['product_serial']) ?></td>
+                <td><?= htmlspecialchars($complaint['Complaint_serial_no']) ?></td>
                 <td><?= htmlspecialchars($complaint['opened_since']) ?></td>
                 <td>
                     <!-- Actions like View, Edit, Delete -->

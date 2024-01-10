@@ -29,7 +29,7 @@
         <div class="col">
             <div class="status-box officer-feedback">
                 <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
-                <h3>Officer Feedback</h3>
+                <h3>Officer's Feedback</h3>
                 <p><?= $officerFeedback ?></p>
             </div>
         </div>
