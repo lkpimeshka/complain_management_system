@@ -3,30 +3,117 @@
 @section('content')
 <div class="container">
 
-    <div class="row" style="padding-top: 20px; padding-bottom: 30px;">
-        <div class="col-sm-12">
-            <h2>User #{{$user->id}} | View</h2>
-        </div>
-    </div>
+    <br/>
+    <div class="card" style="padding: 1rem;">
 
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table" style="width: 100%">
-                <tbody>
-                    <tr><th style="width: 35%">ID</th><td>{{$user->id}}</td></tr>
-                    <tr><th style="width: 35%">Name</th><td>{{$user->name}}</td></tr>
-                    <tr><th style="width: 35%">Role</th><td>{{$user->role_name}}</td></tr>
-                    <tr><th style="width: 35%">Institutes</th><td>{{$user->institutes_name}}</td></tr>
-                    <tr><th style="width: 35%">Email</th><td>{{$user->email}}</td></tr>
-                    <tr><th style="width: 35%">Telephone</th><td>{{$user->telephone}}</td></tr>
-                    <tr><th style="width: 35%">NIC</th><td>{{$user->nic}}</td></tr>
-                    <tr><th style="width: 35%">Address Line 1</th><td>{{$user->address_line_1}}</td></tr>
-                    <tr><th style="width: 35%">Address Line 2</th><td>{{$user->address_line_2}}</td></tr>
-                    <tr><th style="width: 35%">City</th><td>{{$user->city}}</td></tr>
-                    <tr><th style="width: 35%">Created Date</th><td>{{$user->created_at}}</td></tr>
-                    <tr><th style="width: 35%">Updated Date</th><td>{{$user->updated_at}}</td></tr>
-                </tbody>
-            </table>
+        <div class="row" style="padding-top: 20px; padding-bottom: 30px;">
+            <div class="col-sm-12">
+                <h2>User #{{$user->id}} | View</h2>
+                <hr/>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12" style="margin-left: 10px">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>ID</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->id}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Name</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->name}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Role</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->role_name}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Institutes</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->institutes_name}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->email}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Telephone</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->telephone}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>NIC</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->nic}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Address Line 1</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->address_line_1}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Address Line 2</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->address_line_2}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>City</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->city}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Created Date</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->created_at}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Updated Date</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{$user->updated_at}}</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
