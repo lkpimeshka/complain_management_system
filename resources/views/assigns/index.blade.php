@@ -64,7 +64,7 @@ if ($currentUser) {
                         <td>{{$activities->updated_at}}</td>
                         <td>
                             
-                            <a href="{{ url('assigns/assignUser/'.$activities->id)}}" class="btn btn-success btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Submit Details</a>
+                            <a href="{{ url('assigns/completeJob/'.$activities->id)}}" class="btn btn-success btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Submit Details</a>
                              <!-- <a href="{{ url('assigns/assignUser/'.$activities->id)}}" class="btn btn-success btn-sm"  style="margin-bottom: 10px; margin-top: 10px ">Complete Job</a>
                             <a href="{{url('complain/view/'.$activities->id)}}" class="btn btn-success btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             <a href="{{url('complain/edit/'.$activities->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
