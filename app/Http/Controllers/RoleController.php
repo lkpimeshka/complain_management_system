@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Institute;
 use App\Models\Privilege;
 use App\Models\RolePrivilege;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -91,6 +92,7 @@ class RoleController extends Controller
             ]);
         }
 
+        ActivityLog::createLog('Add new role to the system', Auth::id());
         return Redirect::to('/role/list')->with('success', 'Role saved Successfully.');
     }
 
@@ -153,12 +155,17 @@ class RoleController extends Controller
             RolePrivilege::where('role_id', $request['id'])->delete();
         }
 
+        ActivityLog::createLog('Update role in the system', Auth::id());
         return Redirect::to('/role/list')->with('success', 'Role #'.$request['id'].' updated Successfully.');
 
     }
 
     public function viewRole($id)
     {
+        if (!(Privilege::checkPrivilege(2))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $privileges = null;
         $role = Role::join('institutes', 'roles.institute', 'institutes.id')
                         ->where('roles.id', $id)
@@ -193,6 +200,7 @@ class RoleController extends Controller
         Role::where('id', $id)->delete();
         RolePrivilege::where('role_id', $id)->delete();
 
+        ActivityLog::createLog('Delete role #'.$id, Auth::id());
         return response()->json(['success' => 'Role #'.$id.' deleted Successfully.']);
     }
 
