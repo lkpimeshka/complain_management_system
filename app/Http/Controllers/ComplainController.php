@@ -11,6 +11,7 @@ use App\Models\Assign;
 use App\Models\Privilege;
 use App\Models\RolePrivilege;
 use App\Models\Problem;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -20,6 +21,10 @@ class ComplainController extends Controller
 
     public function index()
     {
+        if (!(Privilege::checkPrivilege(10))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+        
         if($this->loginUser()->role == 1){
             $complaints = Complain::all();
         } else if($this->loginUser()->role == 4){
@@ -76,6 +81,10 @@ class ComplainController extends Controller
 
     public function createComplain(Request $request)
     {
+        if (!(Privilege::checkPrivilege(9))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $problems = Problem::all();
         $locations = Branch::all();
 
@@ -114,11 +123,16 @@ class ComplainController extends Controller
             ]);
         }
 
+        ActivityLog::createLog('Add new complaint to the system', Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Complaint saved Successfully.');
     }
 
     public function editComplain($id)
     {
+        if (!(Privilege::checkPrivilege(11))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complaint = Complain::where('id', $id)->first();
         $problems = Problem::all();
         $locations = Branch::all();
@@ -142,12 +156,17 @@ class ComplainController extends Controller
                     'txtcomplaint_remarks' => $request['description'],
                 ]);
 
+        ActivityLog::createLog('Update details of complaint #'.$request['id'], Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Complain #'.$request['id'].' Updated Successfully.');
 
     }
 
     public function assignUser($id)
     {
+        if (!(Privilege::checkPrivilege(13))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complaint = Complain::where('id', $id)->first();
 
         $rolesWithPrivilege = RolePrivilege::whereJsonContains('privileges', '14')->pluck('role_id')->toArray();
@@ -186,11 +205,16 @@ class ComplainController extends Controller
                     'status' => 2,
                 ]);
 
+        ActivityLog::createLog('Assign Officer to the complaint #'.$request['complaint_id'], Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Assigned saved Successfully.');
     }
 
     public function completeJob($id)
     {
+        if (!(Privilege::checkPrivilege(14))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complaint = Complain::where('id', $id)->first();
 
         return view('complaints.completeJob',['complaint' => $complaint]);
@@ -233,11 +257,16 @@ class ComplainController extends Controller
             ]);
         }
 
+        ActivityLog::createLog('Set complaint #'.$request['complaint_id'].' as Completed', Auth::id());
         return Redirect::to('/complain/my-complaints')->with('success', 'Complete saved Successfully.');
     }
 
     public function finishedJob($id)
     {
+        if (!(Privilege::checkPrivilege(15))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complaint = Complain::where('id', $id)->first();
         return view('complaints.finishedJob',['complaint' => $complaint]);
     }
@@ -263,11 +292,16 @@ class ComplainController extends Controller
                     'status' => 5,
                 ]);
 
+        ActivityLog::createLog('Set complaint #'.$request['complaint_id'].' as Finished', Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Assigned saved Successfully.');
     }
 
     public function reAssignsUser($id)
     {
+        if (!(Privilege::checkPrivilege(13))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complaint = Complain::where('id', $id)->first();
 
         $rolesWithPrivilege = RolePrivilege::whereJsonContains('privileges', '14')->pluck('role_id')->toArray();
@@ -306,22 +340,36 @@ class ComplainController extends Controller
                     'status' => 4,
                 ]);
 
+        ActivityLog::createLog('Re-assign Complaint #'.$request['complaint_id'], Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Re-Assigned saved Successfully.');
     }
 
     public function viewComplain($id)
     {
+        if (!(Privilege::checkPrivilege(10))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complain = Complain::where('id', $id)->first();
         return view('complaints.viewComplain', ['complain'=>$complain]);
     }
 
     public function deleteComplain($id)
     {
+        if (!(Privilege::checkPrivilege(12))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         Complain::where('id', $id)->delete();
+        ActivityLog::createLog('Delete Complaint #'.$id, Auth::id());
         return Redirect::to('/complain/list')->with('success', 'Complain #'.$id.' Deleted Successfully.');
     }
     public function assign_user($id)
     {
+        if (!(Privilege::checkPrivilege(13))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complain = Complain::where('id', $id)->first();
         return view('complaints.assign_user', ['complain'=>$complain]);
     }
@@ -334,6 +382,10 @@ class ComplainController extends Controller
 
 public function viewComplainProgress($id)
     {
+        if (!(Privilege::checkPrivilege(10))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $complain = Complain::join('users', 'complaints.txtcomplainer_id', 'users.id')
                             ->join('branches', 'complaints.location', 'branches.id')
                             ->join('problem_type', 'complaints.problem_type', 'problem_type.id')
@@ -351,6 +403,10 @@ public function viewComplainProgress($id)
 
     public function viewComplainAction($id)
     {
+        if (!(Privilege::checkPrivilege(10))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+        
         $activity = Assign::find($id);
         $complain = Complain::join('users', 'complaints.txtcomplainer_id', 'users.id')
                             ->join('branches', 'complaints.location', 'branches.id')

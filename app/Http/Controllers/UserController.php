@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Branch;
 use App\Models\Privilege;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\TestMail;
@@ -83,6 +84,7 @@ class UserController extends Controller
         $user->branch = $request->branch;
         $user->save();
 
+        ActivityLog::createLog('Add new user to the system', Auth::id());
         return Redirect::to('/user/list')->with('success', "Cheers! New User Added Successfully.");
     }
 
@@ -131,12 +133,17 @@ class UserController extends Controller
                     'branch' => $request['branch'],
                 ]);
 
+        ActivityLog::createLog('Update details of user #'.$request['id'], Auth::id());
         return Redirect::to('/user/list')->with('success', 'User #'.$request['id'].' updated Successfully.');
 
     }
 
     public function viewUser($id)
     {
+        if (!(Privilege::checkPrivilege(6))) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have Sufficient Permissions to Perform this Operation.');
+        }
+
         $user = User::join('roles', 'users.role', 'roles.id')
                     ->join('institutes', 'roles.institute', 'institutes.id')
                     ->where('users.id', $id)
@@ -178,6 +185,7 @@ class UserController extends Controller
         }
 
         $user->delete();
+        ActivityLog::createLog('Delete user #'.$id.' from the system', Auth::id());
         return response()->json(['success' => 'User #' . $id . ' deleted successfully.']);
     }
    
