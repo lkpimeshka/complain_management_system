@@ -42,7 +42,7 @@ Route::get('/test-mail', [UserController::class, 'testMail']);
 
 Auth::routes(['verify' => true]);
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('complain/list', [ComplainController::class, 'index'])->middleware('auth');
 Route::get('complain/my-complaints', [ComplainController::class, 'assigedComplaints'])->middleware('auth');
