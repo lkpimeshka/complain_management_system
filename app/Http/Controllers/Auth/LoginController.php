@@ -43,14 +43,14 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if($user->role != 4){
-            if ($user->device_ip != $request->ip()) {
+        // if($user->role != 4){
+        //     if ($user->device_ip != $request->ip()) {
 
-                Auth::logout();
-                ActivityLog::createLog('User try to logg in with Unauthorized device', $user->id);
-                return redirect('/login')->with('error', 'Unauthorized access. Please log in again.');
-            }
-        }
+        //         Auth::logout();
+        //         ActivityLog::createLog('User try to logg in with Unauthorized device', $user->id);
+        //         return redirect('/login')->with('error', 'Unauthorized access. Please log in again.');
+        //     }
+        // }
 
         ActivityLog::createLog('User logged in', $user->id);
         return redirect()->intended($this->redirectPath());
