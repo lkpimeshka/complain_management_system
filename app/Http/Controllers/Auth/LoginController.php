@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -39,10 +41,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated($request, $user)
+    protected function authenticated(Request $request, $user)
     {
+        // if($user->role != 4){
+        //     if ($user->device_ip != $request->ip()) {
+
+        //         Auth::logout();
+        //         ActivityLog::createLog('User try to logg in with Unauthorized device', $user->id);
+        //         return redirect('/login')->with('error', 'Unauthorized access. Please log in again.');
+        //     }
+        // }
 
         ActivityLog::createLog('User logged in', $user->id);
         return redirect()->intended($this->redirectPath());
     }
+
 }

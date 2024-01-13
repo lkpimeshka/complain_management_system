@@ -79,7 +79,7 @@ $privilegeList = count($rolesWithPrivilege) > 0 ? json_decode($rolesWithPrivileg
                                     @endif
                                 @endif
                             @endif
-                            <a href="{{url('complain/view/'.$complaint->id)}}" class="btn btn-secondary btn-sm" title ="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="{{url('complain/view-progress/'.$complaint->id)}}" class="btn btn-secondary btn-sm" title ="View" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             @if($lgUser->role != 1 && $complaint->status == 1)
                                 @if($lgUser->role == 4)
                                     <a href="{{url('complain/edit/'.$complaint->id)}}" class="btn btn-primary btn-sm" title ="Edit"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>

@@ -42,7 +42,7 @@ Route::get('/test-mail', [UserController::class, 'testMail']);
 
 Auth::routes(['verify' => true]);
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('complain/list', [ComplainController::class, 'index'])->middleware('auth');
 Route::get('complain/my-complaints', [ComplainController::class, 'assigedComplaints'])->middleware('auth');
@@ -53,6 +53,8 @@ Route::get('complain/edit/{id}', [ComplainController::class, 'editComplain'])->m
 Route::post('complain/update', [ComplainController::class, 'updateComplain'])->name('update-complain')->middleware('auth');
 Route::get('complain/view/{id}', [ComplainController::class, 'viewComplain'])->middleware('auth');
 Route::get('complain/delete/{id}', [ComplainController::class, 'deleteComplain'])->middleware('auth');
+Route::get('complain/view-progress/{id}', [ComplainController::class, 'viewComplainProgress'])->middleware('auth');
+Route::get('complain/view-action/{id}', [ComplainController::class, 'viewComplainAction'])->middleware('auth');
 
 Route::get('complain/assign/{id}', [ComplainController::class, 'assignUser'])->middleware('auth');
 Route::post('complain/save-assign', [ComplainController::class, 'saveAssign'])->name('save-assign')->middleware('auth');
