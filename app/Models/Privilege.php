@@ -18,7 +18,7 @@ class Privilege extends Model
     {
         $user = Auth::user();
 
-        if($user->role == 1 || $user->role == 3){
+        if($user->role == 1 || $user->role == 2 || $user->role == 3){
             return true;
         }
 

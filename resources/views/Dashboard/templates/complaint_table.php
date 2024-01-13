@@ -22,7 +22,7 @@
                     <td><?= htmlspecialchars($complaint['id']) ?></td>
                     <td><?= htmlspecialchars($complaint['subject']) ?></td>
                     <td><?= htmlspecialchars($complaint['complaint_type']) ?></td>
-                    <td><?= htmlspecialchars($complaint['product_serial']) ?></td>
+                    <td><?= htmlspecialchars($complaint['complaint_serial_no']) ?></td>
                     <td><?= htmlspecialchars($complaint['opened_since']) ?></td>
                     <td>
                         <!-- Actions like View, Edit, Delete -->
